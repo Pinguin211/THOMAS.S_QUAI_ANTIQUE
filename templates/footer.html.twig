@@ -1,0 +1,45 @@
+{% import 'macros.html.twig' as macro %}
+
+<footer>
+    <div class="row">
+        <div class="col-lg-4 timetable">
+            {{ macro.Timetable }}
+        </div>
+        <div class="col-lg navigation">
+            <div class="row">
+                <div class="col">
+                    <nav>
+                        <p>Navigation :</p>
+                        <ul>
+                            <li><a href="#"><i class="bi bi-house-door" aria-label="Accueil"> Accueil</i></a></li>
+                            <li><a href="#"><i class="bi bi-ticket" aria-label="Réservation"> Réservation</i></a></li>
+                            <li><a href="#"><i class="bi bi-map" aria-label="Menu"> Menu</i></a></li>
+                            <li><a href="#"><i class="bi bi-images" aria-label="Galerie"> Galerie </i></a></li>
+                            {% if app.user %}
+                                <li><a href="#"><i class="bi bi-person" aria-label="Profil"> Profil </i></a></li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col">
+                    <nav>
+                        <p>Suivez-nous :</p>
+                        <ul>
+                            <li><a href="#"><i class="bi bi-facebook" aria-label="Facebook"> Facebook </i></a></li>
+                            <li><a href="#"><i class="bi bi-twitter" aria-label="Twitter"> Twitter </i></a></li>
+                            <li><a href="#"><i class="bi bi-linkedin" aria-label="Linkedin"> Linkedin </i></a></li>
+                            <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"
+                                   aria-label="Youtube"><i class="bi bi-youtube"> Youtube</i></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg label">
+            <img id="label" src="{{ asset("images/label.png") }}" alt="Label 100% Français">
+        </div>
+    </div>
+    <hr style="color: #B6AC97">
+    <div class="row"><p id="fake">Tout ce qui est sur ce site est faux !!</p></div>
+</footer>

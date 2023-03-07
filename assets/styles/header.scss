@@ -1,0 +1,134 @@
+header>nav {
+
+  z-index: 3;
+  background-color: #392C1E;
+  box-shadow: 0 5px 10px #3F3F3F;
+
+  .nav-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-collapse {
+    background-color: #392C1E;
+    .nav-link {
+      color: #B6AC97;
+      font-family: Inter, sans-serif ;
+      transition: 300ms ease;
+      filter: brightness(1);
+      &:hover {
+        color: #B6AC97;
+        filter: brightness(0.8);
+      }
+      &:visited {
+        color: #B6AC97;
+        filter: brightness(1);
+      }
+    }
+  }
+
+
+  /* Desktop */
+
+  @media (orientation: landscape) and (min-width: 992px){
+    height: 100px;
+    #logo {
+      height: 100px;
+    }
+
+    #connexion {
+      width: str-length("Connection/s'inscrire") * 1.3em;
+    }
+
+    #navigation {
+      width: 100%;
+      li {
+        width: 25%;
+      }
+    }
+
+    .nav-link {
+      font-size: 1.3em;
+    }
+
+    #connection_form {
+      border: black 2px solid;
+      box-shadow: 0 5px 10px #3F3F3F;
+      background-color: #B6AC97;
+      color: #333333;
+      width: 30vw;
+      padding: 0 3vw;
+      text-align: center;
+      a {
+        color: #333333;
+      }
+      .space {
+        margin: 1em 0;
+        a {
+          transition: 300ms ease;
+          filter: brightness(1);
+          &:hover {
+            filter: brightness(1.5);
+          }
+        }
+      }
+      input {
+        border: solid 1px black;
+      }
+    }
+
+
+  }
+
+  /* Mobile */
+
+  @media (orientation: portrait), (max-width: 992px) {
+    height: 200px;
+    #logo {
+      height: 200px;
+    }
+    .navbar-brand {
+      padding: 0;
+    }
+
+    .navbar-collapse {
+      box-shadow: 0 5px 10px #3F3F3F;
+    }
+
+    .navbar-toggler {
+      padding: 0;
+      margin-right: 20px;
+      width: 2.5em;
+      height: 2.5em;
+      background-color: #B6AC97;
+    }
+
+    .nav-link {
+      font-size: 2em;
+    }
+
+    #connection_form {
+      transition: 300ms ease;
+      background-color: #392C1E;
+      color: #333333;
+      margin: 0 5vw;
+      text-align: center;
+      a {
+        color: #B6AC97;
+      }
+      .space {
+        font-size: 2em;
+        margin: 1em 0;
+        color: #B6AC97;
+      }
+      input {
+        font-size: 1.3em;
+      }
+      .btn {
+        height: 2em;
+        color: white;
+      }
+    }
+
+  }
+}

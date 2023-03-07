@@ -1,0 +1,77 @@
+<header>
+    <nav class="navbar navbar-expand-lg fixed-top ">
+        <a class="navbar-brand" href="/">
+            <img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo du restaurants">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="rounded-3 collapse navbar-collapse{% if auto.login.error is defined and auto.login.error %} show{% endif %}" id="collapsibleNavbar">
+            <ul id="navigation" class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Réservation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Galerie</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav rounded-3" id="connexion">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        {% if app.user %}
+                            {{ app.user.userIdentifier }}
+                        {% else %}
+                            Connection/s'inscrire
+                        {% endif %}
+                    </a>
+                    <ul id="connection_form" class="dropdown-menu dropdown-menu-end{% if auto.login.error is defined and auto.login.error %} show{% endif %}"
+                        data-bs-popper="static">
+                        <li>
+                            {% if app.user %}
+                                <div class="space">
+                                    <a href="#">Mon profil</a>
+                                </div>
+                                <hr>
+                                <div class="space">
+                                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                                </div>
+                            {% else %}
+                                <form method="post" action="{{ path('app_login') }}">
+                                    {% if auto.login.error is defined and auto.login.error %}
+                                        <div class="space">
+                                            <div class="alert alert-danger">{{ auto.login.error.messageKey|trans(auto.login.error.messageData, 'security') }}</div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="space">
+                                        <label for="inputEmail">Email :</label>
+                                        <input type="email" value="{% if auto.login.last_email is defined %}{{ auto.login.last_email }}{% else %}{% endif %}" name="email" id="inputEmail"
+                                               class="form-control" autocomplete="email" required autofocus>
+                                    </div>
+                                    <div class="space">
+                                        <label for="inputPassword">Mot de passe :</label>
+                                        <input type="password" name="password" id="inputPassword" class="form-control"
+                                               autocomplete="current-password" required>
+                                    </div>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <input type="hidden" name="route" value="{{ app.request.attributes.get('_route') }}">
+                                    <input type="hidden" name="json_get_params" value="{{ app.request.query.all() | json_encode }}">
+                                    <div id="button_connect">
+                                        <button class="btn space" type="submit">SE CONNECTER</button>
+                                    </div>
+                                </form>
+                                <div class="space">
+                                    <a href="{{ path("app_signup") }}">Ici pour vous inscrire</a>
+                                </div>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

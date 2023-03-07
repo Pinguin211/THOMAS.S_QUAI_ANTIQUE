@@ -1,0 +1,82 @@
+@import '~bootstrap/scss/bootstrap';
+@import "fonts/fonts.scss";
+
+body {
+
+  font-family: ProzaLibre, sans-serif;
+  font-weight: 500;
+
+  h1, h2, title {
+    font-family: Inter, sans-serif ;
+  }
+
+  background-color: #B6AC97;
+
+  @media (orientation: landscape) and (min-width: 992px){
+    main {
+      margin-top: 100px;
+    }
+    @media (min-width: 992px) {
+      font-size: 14px;
+    }
+
+    @media (min-width: 1200px) {
+      font-size: 14px;
+    }
+
+    @media (min-width: 1400px) {
+      font-size: 16px;
+    }
+  }
+
+  @media (orientation: portrait), (max-width: 992px) {
+    main {
+      margin-top: 200px;
+    }
+    @media (max-device-width: 767.98px) {
+      font-size: 30px;
+    }
+
+    @media (min-device-width: 768px) {
+      font-size: 34px;
+    }
+  }
+
+  /* Bootstrap */
+
+  .row, .col , .navbar{
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Classe */
+
+  .rounded_box {
+    border-radius: 5%;
+  }
+
+  @mixin stickers {
+    color: white;
+    font-weight: 600;
+    background-color: #906427;
+    border-radius: 30px;
+    border: 2px black solid;
+    box-shadow: 0 5px 10px #3F3F3F;
+  }
+
+  .stickers {
+    @include stickers;
+  }
+
+  .btn {
+    @include stickers;
+    transition: 300ms ease;
+    &:hover {
+      @include stickers;
+      box-shadow: 0 0 0;
+    }
+  }
+
+  @import "header";
+  @import "footer";
+}

@@ -1,0 +1,65 @@
+footer {
+  z-index: 3;
+  position: relative;
+  background-color: #392C1E;
+  box-shadow: 0 -5px 10px #3F3F3F;
+  padding: 2em;
+  text-align: center;
+
+  .timetable {
+    background-color: #906427;
+    color: white;
+    border-radius: 30px;
+    padding: 1em;
+    dl {
+      margin: 0.5em;
+    }
+      .day {
+        font-weight: normal;
+      }
+      .hour {
+        display: flex;
+        flex-direction: column;
+      }
+  }
+
+  .navigation {
+    color: #B6AC97;
+    p {
+      text-align: center;
+      font-size: 1.3em;
+      text-decoration: underline;
+    }
+    li {
+      padding: 1em 0;
+      text-align: start;
+      a {
+        color: #B6AC97;
+        text-decoration: none;
+        transition: 300ms ease;
+        filter: brightness(1);
+        &:hover {
+          filter: brightness(0.8);
+        }
+      }
+    }
+  }
+
+  #label {
+    height: 300px;
+  }
+
+  #fake {
+    text-align: center;
+    color: #B6AC97;
+    font-style: italic;
+    font-size: 0.8em;
+  }
+  /* Mobile */
+
+  @media (orientation: portrait), (max-width: 992px) {
+    .navigation, .label, .timetable {
+      margin: 1.5em 0;
+    }
+  }
+}
