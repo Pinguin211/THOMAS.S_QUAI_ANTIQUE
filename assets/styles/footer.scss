@@ -2,7 +2,7 @@ footer {
   z-index: 3;
   position: relative;
   background-color: #392C1E;
-  box-shadow: 0 -5px 10px #3F3F3F;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.75);
   padding: 2em;
   text-align: center;
 
@@ -57,7 +57,7 @@ footer {
   }
   /* Mobile */
 
-  @media (orientation: portrait), (max-width: 992px) {
+  @media (max-width: 992px) {
     .navigation, .label, .timetable {
       margin: 1.5em 0;
     }

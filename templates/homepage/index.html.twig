@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+
+{% block body %}
+
+    <div data-controller="hello">
+        <p data-target="my-stimulus.output"></p>
+        <button data-action="my-stimulus#greet">Greet</button>
+    </div>
+    <script src="{{ asset('controllers/hello_controller.js') }}"></script>
+{% endblock %}

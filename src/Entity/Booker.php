@@ -24,9 +24,10 @@ class Booker
     #[ORM\OneToMany(mappedBy: 'booker', targetEntity: Reservation::class, orphanRemoval: true)]
     private Collection $reservations;
 
-    public function __construct()
+    public function __construct(string $name = 'default', array $allergys = [])
     {
-        $this->allergys = new ArrayCollection();
+        $this->name = $name;
+        $this->allergys = new ArrayCollection($allergys);
         $this->reservations = new ArrayCollection();
     }
 

@@ -58,8 +58,12 @@
                                                autocomplete="current-password" required>
                                     </div>
                                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                                    <input type="hidden" name="route" value="{{ app.request.attributes.get('_route') }}">
-                                    <input type="hidden" name="json_get_params" value="{{ app.request.query.all() | json_encode }}">
+                                    {% if auto.login.force_redirect != NULL %}
+                                        <input type="hidden" name="route" value="{{ auto.login.force_redirect }}">
+                                    {% else %}
+                                        <input type="hidden" name="route" value="{{ app.request.attributes.get('_route') }}">
+                                        <input type="hidden" name="json_get_params" value="{{ app.request.query.all() | json_encode }}">
+                                    {% endif %}
                                     <div id="button_connect">
                                         <button class="btn space" type="submit">SE CONNECTER</button>
                                     </div>

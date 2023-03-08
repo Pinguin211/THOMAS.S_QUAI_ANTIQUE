@@ -1,0 +1,11 @@
+main {
+  #inscription {
+    @media (min-width: 992px) {
+      margin: 10vh auto;
+    }
+    @media (max-width: 992px) {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

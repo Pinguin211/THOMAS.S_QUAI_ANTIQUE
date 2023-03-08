@@ -21,6 +21,19 @@ class Client
     #[ORM\JoinColumn(nullable: false)]
     private ?Booker $booker = null;
 
+    #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    public function __construct(Booker $booker, User $user, int $cutlerys = 1)
+    {
+        if ($cutlerys > 50 || $cutlerys < 1)
+            $cutlerys = 1;
+        $this->cutlerys = $cutlerys;
+        $this->user = $user;
+        $this->booker = $booker;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +59,18 @@ class Client
     public function setBooker(Booker $booker): self
     {
         $this->booker = $booker;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

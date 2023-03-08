@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('signup') }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div id="inscription" data-controller="ingredients">
+            {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
+            <div class="div-column">
+                {{ form_row(form.email, { 'label' : 'Email :'}) }}
+            </div>
+            <div class="div-column">
+                {{ form_row(form.password, { 'label' : 'Mot de passe :'}) }}
+            </div>
+            <div class="basic_dropdown div-column">
+                <label for="cutlerys">Nombres de couverts habituel :</label>
+                <div id="cutlerys" class="dropdown_widget">
+                    <i class="bi bi-person"></i>
+                    {{ form_widget(form.cutlerys) }}
+                </div>
+            </div>
+            <div>
+                <label for="#ingredients_tab">Choisissez vos allergie :</label>
+                {{ macro.IngredientsTab(ingredients_list, ingredients_types) }}
+            </div>
+            {{ form_widget(form.ingredients_select, {'id' : 'ingredients_select'}) }}
+            <div class="validation_checkbox">
+                {{ form_row(form.cgu, { 'label' : "Vous acceptez les conditions d'utilisations"}) }}
+            </div>
+            <div class="center">
+                {{ form_row(form.submit, { 'label' : "INSCRIPTION", 'attr' : {'class' : 'btn'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

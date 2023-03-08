@@ -56,6 +56,15 @@ class Moment
 
     public function getMomentToString(string $separator = 'h'): string
     {
-        return $this->hours . $separator . $this->min;
+        if ($this->hours === 0)
+            $h = '00';
+        else
+            $h = $this->hours;
+        if ($this->min === 0)
+            $m = '00';
+        else
+            $m = $this->min;
+
+        return $h . $separator . $m;
     }
 }

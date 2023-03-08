@@ -1,5 +1,5 @@
 {% macro Timetable() %}
-    {% set timetable =  getTimetable()%}
+    {% set timetable =  getTimetable() %}
     {% if timetable is same as(false) %}
         <div class="alert"><p>Erreur timetable introuvable ou mauvaise syntaxe, veuillez la mettre à jours</p></div>
     {% else %}
@@ -23,4 +23,38 @@
             <dd class="col">{{ day.getNightSessionString }}</dd>
         </div>
     </dl>
+{% endmacro %}
+
+
+{% macro IngredientsTab(ingredients, type_names) %}
+    <div id="ingredients_tab">
+        <table>
+            <tbody>
+            <tr class="row">
+                {% set i = 0 %}
+                {% for name in type_names %}
+                    <td class="col-3">{{ _self.IngredientsList(name, ingredients[i]) }}</td>
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
+
+{% macro IngredientsList(type, ingredients) %}
+    <table>
+        <thead>
+        <tr>
+            <th>{{ type }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ingredient in ingredients %}
+            <tr>
+                <td><button class="no_submit_btn" type="button" id="{{ ingredient.getId }}">{{ ingredient.getName }}</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endmacro %}

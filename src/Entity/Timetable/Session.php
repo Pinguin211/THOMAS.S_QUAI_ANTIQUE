@@ -19,9 +19,9 @@ class Session
     public static function ConstructSessionByArray(array $info): Session | false
     {
         if (!isset($info[self::KEY_OPEN]) || !is_string($info[self::KEY_OPEN]) ||
-                !($mom_cl = Moment::ConstructSessionByString($info[self::KEY_OPEN])) ||
+                !($mom_op = Moment::ConstructSessionByString($info[self::KEY_OPEN])) ||
             !isset($info[self::KEY_CLOSED]) || !is_string($info[self::KEY_CLOSED]) ||
-                !($mom_op = Moment::ConstructSessionByString($info[self::KEY_CLOSED])))
+                !($mom_cl = Moment::ConstructSessionByString($info[self::KEY_CLOSED])))
             return false;
         return new Session($mom_op, $mom_cl);
     }

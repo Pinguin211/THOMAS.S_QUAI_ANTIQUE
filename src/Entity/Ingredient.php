@@ -9,6 +9,26 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
 {
+    public const TYPE_LEGUMES = 0;
+    public const TYPE_FRUITS = 1;
+    public const TYPE_FRUIT_A_COQUE = 2;
+    public const TYPE_VIANDES = 3;
+    public const TYPE_POISSONS = 4;
+    public const TYPE_EPICES = 5;
+    public const TYPE_FROMAGES = 6;
+    public const TYPE_AUTRES = 7;
+
+    public const TYPE_NAMES = [
+        'Légumes', // 0
+        'Fruits', // 1
+        'Fruits à coque', // 2
+        'Viandes', // 3
+        'Poissons', // 4
+        'Épices', // 5
+        'Fromages', // 6
+        'Autres' // 7
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -47,5 +67,10 @@ class Ingredient
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getTypeName(): string
+    {
+        return self::TYPE_NAMES[$this->type];
     }
 }

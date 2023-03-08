@@ -2,10 +2,6 @@
 
 namespace App\Entity\Timetable;
 
-use App\Lib\JsonFile;
-use App\Service\PathInterface;
-use Symfony\Component\HttpFoundation\File\File;
-
 class Timetable
 {
     public const KEY_TIMETABLE = 'timetable';
@@ -25,11 +21,11 @@ class Timetable
     /**
      * @var Day[] $day
      */
-    private array $day;
+    private array $days;
 
-    public function __construct(array $day)
+    public function __construct(array $days)
     {
-        $this->day = $day;
+        $this->days = $days;
     }
 
     public static function ConstructWithArray(array $info): Timetable|false
@@ -47,7 +43,7 @@ class Timetable
             return new Timetable($arr);
     }
 
-    public static function keyFrTraduction($key): string
+    public static function keyFrTraduction(string $key): string
     {
         return match ($key) {
             self::KEY_MONDAY => 'Lundi',
@@ -57,8 +53,26 @@ class Timetable
             self::KEY_FRIDAY => 'vendredi',
             self::KEY_SATURDAY => 'Samedi',
             self::KEY_SUNDAY => 'Dimanche',
-            default => 'Unknown'
+            default => $key
         };
+    }
+
+    /**
+     * @return Day[]
+     */
+    public function getDays(): array
+    {
+        return $this->days;
+    }
+
+    public function getDay(string $name): Day | false
+    {
+        foreach ($this->days as $day)
+        {
+            if ($day->getName() == $name)
+                return $day;
+        }
+        return false;
     }
 
 }

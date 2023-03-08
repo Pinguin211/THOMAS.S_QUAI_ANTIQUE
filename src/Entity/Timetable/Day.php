@@ -83,4 +83,24 @@ class Day
     {
         $this->name = $name;
     }
+
+    public function getDaySessionString(string $closed_word = 'Fermé', string $separator_session = "-", string $separator_moment = 'h'): string
+    {
+        return $this->getSessionString(self::KEY_DAY, $closed_word, $separator_session, $separator_moment);
+    }
+
+    public function getNightSessionString(string $closed_word = 'Fermé', string $separator_session = "-", string $separator_moment = 'h'): string
+    {
+        return $this->getSessionString(self::KEY_NIGHT, $closed_word, $separator_session, $separator_moment);
+    }
+
+    private function getSessionString(string $key, string $closed_word = 'Fermé', string $separator_session = "-", string $separator_moment = 'h'): string
+    {
+        if ($key === self::KEY_DAY)
+            $session = $this->day;
+        else
+            $session = $this->night;
+        return $session ? $session->getSessionToString($separator_session, $separator_moment) : $closed_word;
+    }
+
 }

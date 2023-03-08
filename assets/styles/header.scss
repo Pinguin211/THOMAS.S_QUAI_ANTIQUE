@@ -2,7 +2,7 @@ header>nav {
 
   z-index: 3;
   background-color: #392C1E;
-  box-shadow: 0 5px 10px #3F3F3F;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
 
   .nav-item {
     width: 100%;
@@ -30,7 +30,7 @@ header>nav {
 
   /* Desktop */
 
-  @media (orientation: landscape) and (min-width: 992px){
+  @media (min-width: 992px){
     height: 100px;
     #logo {
       height: 100px;
@@ -82,10 +82,10 @@ header>nav {
 
   /* Mobile */
 
-  @media (orientation: portrait), (max-width: 992px) {
-    height: 200px;
+  @media (max-width: 992px) {
+    height: 10vh;
     #logo {
-      height: 200px;
+      height: 10vh;
     }
     .navbar-brand {
       padding: 0;
@@ -125,7 +125,6 @@ header>nav {
         font-size: 1.3em;
       }
       .btn {
-        height: 2em;
         color: white;
       }
     }

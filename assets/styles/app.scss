@@ -12,7 +12,7 @@ body {
 
   background-color: #B6AC97;
 
-  @media (orientation: landscape) and (min-width: 992px){
+  @media (min-device-width: 992px){
     main {
       margin-top: 100px;
     }
@@ -29,15 +29,15 @@ body {
     }
   }
 
-  @media (orientation: portrait), (max-width: 992px) {
+  @media (max-device-width: 992px) {
     main {
-      margin-top: 200px;
+      margin-top: 10vh;
     }
-    @media (max-device-width: 767.98px) {
+    @media (max-width: 767.98px) {
       font-size: 30px;
     }
 
-    @media (min-device-width: 768px) {
+    @media (min-width: 768px) {
       font-size: 34px;
     }
   }
@@ -49,20 +49,132 @@ body {
     padding: 0;
   }
 
-  /* Classe */
 
-  .rounded_box {
-    border-radius: 5%;
-  }
+  /* mixin */
 
   @mixin stickers {
     color: white;
     font-weight: 600;
     background-color: #906427;
     border-radius: 30px;
-    border: 2px black solid;
-    box-shadow: 0 5px 10px #3F3F3F;
+    border: 1px black solid;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
+    display: inline-block;
   }
+
+  @mixin box($background_color) {
+    background-color: $background_color;
+    color: white;
+    padding: 2%;
+    border-radius: 5px;
+    border: solid black 1px;
+  }
+
+  @mixin basic_form($width_form)
+  {
+    width: $width_form;
+    background-color: #392C1E;
+    color: #B6AC97;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
+    margin: auto;
+    text-align: start;
+    padding: 3%;
+
+    >div {
+      padding: 2%;
+      margin-bottom: 1em;
+    }
+
+    input {
+      border-radius: 5px;
+    }
+
+    ul {
+      @include box(#906427);
+      list-style-type: none;
+    }
+
+    .div-column {
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 100%;
+      }
+    }
+
+    .no_submit_btn {
+      @include box(#CB2117);
+      margin: 0.2em;
+      padding: 0.2em 5px;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.50);
+      transition: 50ms ease;
+      font-weight: bold;
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    .validation_checkbox>div {
+      display: flex;
+      flex-direction: row;
+      input {
+        order: 1;
+        margin-right: 10px;
+        @media (max-device-width: 992px) {
+          transform: scale(2);
+          margin-right: 20px;
+        }
+      }
+      label {
+        order: 2;
+      }
+    }
+
+    .dropdown_widget {
+      @include box(#906427);
+      display: flex;
+      flex-direction: row;
+      select {
+        width: 100%;
+        background-color: #906427;
+        color: white;
+        border: none;
+      }
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    /* Css pour selection d'ingredients */
+
+    #ingredients_tab {
+      @include box(#906427);
+      width: 100%;
+      height: 20em;
+      overflow: auto;
+      .col-3 {
+        margin-bottom: 2em;
+      }
+      tr {
+        font-style: italic;
+      }
+    }
+
+    #ingredients_select {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      label {
+        @include stickers;
+        padding: 0.2em 5px;
+      }
+    }
+  }
+
+
+  /* Classe */
 
   .stickers {
     @include stickers;
@@ -70,11 +182,17 @@ body {
 
   .btn {
     @include stickers;
+    font-size: 1.5em;
     transition: 300ms ease;
     &:hover {
       @include stickers;
-      box-shadow: 0 0 0;
+      box-shadow: none;
     }
+  }
+
+  .basic_form {
+    @media (min-width: 992px){@include basic_form(50vw)}
+    @media (max-width: 992px) {@include basic_form(100%)}
   }
 
   @import "header";
