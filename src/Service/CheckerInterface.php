@@ -14,13 +14,17 @@ class CheckerInterface
         if ($file['size'] > $maxSize)
             return false;
         if (!in_array($file['type'], $mimeType, true))
-        return false;
-        foreach ($extensions as $extension)
-        {
-            if (str_contains($file['name'], $extension))
-                return true;
-        }
-        return false;
+            return false;
+        $ext = $this->fileGetExtension($file);
+        if (!in_array($ext, $extensions))
+            return false;
+        return true;
+    }
+
+    public function fileGetExtension(array $file): string
+    {
+        $arr = explode('.', $file['name']);
+        return $arr[array_key_last($arr)];
     }
 
     /**

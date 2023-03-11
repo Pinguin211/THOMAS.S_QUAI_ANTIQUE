@@ -31,12 +31,29 @@ class PathInterface
         return $this->getPath('getPublicDirPath', 'json/', $create_path);
     }
 
+    public function getImagesDirPath(bool $create_path = true): string
+    {
+        return $this->getPath('getPublicDirPath', 'images/', $create_path);
+    }
+
+    public function getGaleryImagesDirPath(bool $create_path = true): string
+    {
+        return $this->getPath('getImagesDirPath', 'galery/', $create_path);
+    }
+
     //PARTIE FICHIER
 
     public function getInfoFilePath(): string
     {
         return $this->getPath('getJsonDirPath', 'info.json', false);
     }
+
+    public function getGaleryImageFilePath(string $image_name, string $type_ext): string
+    {
+        return $this->getPath('getGaleryImagesDirPath', "$image_name.$type_ext", false);
+    }
+
+    //Fonction commune
 
     private function getPath(string $start_func, string $end, bool $create_path): string
     {

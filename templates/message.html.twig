@@ -7,17 +7,27 @@
     {{ parent() }}
     <style>
         main {
-            padding: 20vh 30vw;
             text-align: center;
-            min-height: 70vh;
+        }
+        main>div {
+            background-color: #392C1E;
+            color: #906427;
+            padding: 2%;
+            border-radius: 5px;
+            border: solid black 1px;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.75);
+            display: inline-block;
+            margin: 25vh auto;
         }
     </style>
 {% endblock %}
 
 {% block body %}
     <main>
-        <h1>{{ title }}</h1>
-        <p>{{ message }}</p>
-        <a href="{{ path(redirect_app) }}">Clickez ici pour être redirigé</a>
+        <div>
+            <h1>{{ title }}</h1>
+            <p>{{ message }}</p>
+            <a href="{{ path(redirect_app) }}">Clickez ici pour être redirigé</a>
+        </div>
     </main>
 {% endblock %}

@@ -29,15 +29,15 @@ body {
     }
   }
 
-  @media (max-device-width: 992px) {
+  @media (max-device-width: 992px), (max-width: 992px){
     main {
       margin-top: 10vh;
     }
-    @media (max-width: 767.98px) {
+    @media (max-device-width: 767.98px) {
       font-size: 30px;
     }
 
-    @media (min-width: 768px) {
+    @media (min-device-width: 768px) and (max-device-width: 992px){
       font-size: 34px;
     }
   }

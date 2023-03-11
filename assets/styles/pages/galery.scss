@@ -1,0 +1,139 @@
+@mixin galerie(
+  $img_width,
+  $view_image
+) {
+  #galery {
+    background-color: #392C1E;
+    width: calc(#{$view_image} * #{$img_width} + #{$img_width} / 2);
+    height: 100%;
+    text-align: center;
+    margin: auto;
+
+
+    .galery_img {
+      width: $img_width;
+      padding: 1em 0;
+      background-color: black;
+      margin: 1em auto;
+      transition: 300ms ease;
+      img {
+        width: 100%;
+        height: calc(#{$img_width}/(1 + (9/7)));
+      }
+      label {
+        background-color: rgba(128, 128, 128, 0.8);
+        color: white;
+        opacity: 0;
+        position: fixed;
+        transform: translateY(-100%);
+        width: 100%;
+        transition: 300ms ease;
+      }
+
+      &:hover {
+        filter: brightness(0.8);
+        cursor: pointer;
+        label {
+          transform: translateY(-1em);
+          opacity: 1;
+        }
+      }
+    }
+
+    a {
+      padding: 2em;
+    }
+
+    #add_image {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0);
+    }
+
+  }
+
+}
+
+
+main {
+  @media (max-width: 700px), (max-device-width: 700px) {
+    @include galerie(calc(100vw / 2) , 1)
+  }
+  @media (min-width: 700px) and (orientation: landscape){
+    @include galerie(calc(100vw / 3), 2)
+  }
+  @media (min-width: 1200px) and (orientation: landscape) {
+    @include galerie(calc(100vw / 5), 3)
+  }
+}
+
+body {
+  overflow-x: hidden;
+  #diapo, #form {
+    z-index: 997;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+
+    >div {
+      @media (min-width: 992px) {
+        margin-top: 50px;
+        width: 60%;
+      }
+      @media (max-width: 992px) {
+        margin-top: 10vh;
+        width: 95%
+      }
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 998;
+      background-color: #392C1E;
+      color: #B6AC97;
+      text-align: center;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.75);
+      border: solid black 1px;
+      border-radius: 5px;
+      padding: 2em;
+
+      .image_div {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        img {
+          $width: 100%;
+          max-width: $width;
+          height: calc($width/(1 + (9/7)));
+        }
+      }
+    }
+    i {
+      position: absolute;
+      top: 50%;
+      scale: 4;
+      opacity: 60%;
+      transition: 200ms ease;
+      &:hover {
+        opacity: 100%;
+        scale: 5;
+        cursor: pointer;
+      }
+      &.bi-chevron-compact-right {
+        right: 10px;
+      }
+      &.bi-chevron-compact-left {
+        left: 10px;
+      }
+      &.bi-x-lg {
+        scale: 1;
+        right: 5px;
+        top: 5px;
+      }
+      &.bi-trash {
+        scale: 1;
+        left: 5px;
+        top: 5px;
+      }
+    }
+  }
+}

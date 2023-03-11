@@ -37,7 +37,7 @@ header>nav {
     }
 
     #connexion {
-      width: str-length("Connection/s'inscrire") * 1.3em;
+      width: str-length("Connexion/s'inscrire") * 1.3em;
     }
 
     #navigation {
@@ -92,7 +92,7 @@ header>nav {
     }
 
     .navbar-collapse {
-      box-shadow: 0 5px 10px #3F3F3F;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
     }
 
     .navbar-toggler {

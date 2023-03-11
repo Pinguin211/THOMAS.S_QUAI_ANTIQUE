@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('galery') }}
+{% endblock %}
+
+{% block body %}
+    <div id="galery" data-controller="galery">
+        <div class="row">
+            {% for image in images %}
+                <div class="galery_img" id="{{ image.getid }}">
+                    <label for="{{ image.getid }}">{{ image.gettitle }}</label>
+                    <img id="{{ image.getid }}" src="{{ asset(image.getpath) }}" alt="{{ image.gettitle }}">
+                </div>
+            {% endfor %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div id="addImage"></div>
+            {% endif %}
+        </div>
+        <div class="row">
+            <a href="#">
+                <button type="button" class="btn">RESERVER UNE TABLE</button>
+            </a>
+        </div>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div hidden id="isAdmin">1</div>
+        <div hidden id="user_id">{{ app.user.getid }}</div>
+        <div hidden id="user_password">{{ app.user.getpassword }}</div>
+    {% endif %}
+
+{% endblock %}

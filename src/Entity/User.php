@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Service\GaleryInterface;
+use App\Service\RolesInterface;
 use App\Validator\UserEmailExist;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -151,5 +154,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->client = $client;
 
         return $this;
+    }
+
+    public function getAdmin(RolesInterface $roles,
+                             EntityManagerInterface $entityManager): Admin | false
+    {
+        return $roles->is_admin($this) ? new Admin($entityManager) : false;
     }
 }
