@@ -13,7 +13,7 @@ class Timetable
     private const KEY_FRIDAY = 'friday';
     private const KEY_SATURDAY = 'saturday';
     private const KEY_SUNDAY = 'sunday';
-    private const ARR_KEY_DAY = [
+    public const ARR_KEY_DAYS = [
         self::KEY_MONDAY, self::KEY_TUESDAY, self::KEY_WEDNESDAY, self::KEY_THURSDAY,
         self::KEY_FRIDAY, self::KEY_SATURDAY, self::KEY_SUNDAY
     ];
@@ -31,10 +31,10 @@ class Timetable
     public static function ConstructWithArray(array $info): Timetable|false
     {
         $arr = [];
-        foreach (self::ARR_KEY_DAY as $key)
+        foreach (self::ARR_KEY_DAYS as $key)
         {
             if (isset($info[$key]) && is_array($info[$key]) &&
-                ($day = Day::ConstructDayByArray($info[$key], self::keyFrTraduction($key))))
+                ($day = Day::ConstructDayByArray($info[$key], $key)))
                 $arr[] = $day;
         }
         if (empty($arr))
@@ -73,6 +73,24 @@ class Timetable
                 return $day;
         }
         return false;
+    }
+
+    public function addDay(Day $day)
+    {
+        $this->days[] = $day;
+    }
+
+    public function setDays(array $days)
+    {
+        $this->days = $days;
+    }
+
+    public function getAsArray(): array
+    {
+        $arr = [];
+        foreach ($this->days as $day)
+            $arr[$day->getName()] = $day->getAsArray();
+        return $arr;
     }
 
 }

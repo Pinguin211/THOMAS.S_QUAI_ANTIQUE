@@ -4,9 +4,10 @@ namespace App\Entity\Timetable;
 
 class Day
 {
-    private const KEY_DAY = 'day';
-    private const KEY_NIGHT = 'night';
-    private const ARR_KEY = [self::KEY_DAY, self::KEY_NIGHT];
+    public const KEY_DAY = 'day';
+    public const KEY_NIGHT = 'night';
+    public const ARR_KEY = [self::KEY_DAY, self::KEY_NIGHT];
+    private const CLOSED_KEY = 'closed';
 
     private string $name;
     private Session|null $day;
@@ -28,7 +29,7 @@ class Day
         foreach (self::ARR_KEY as $key) {
             if (is_array($info[$key]) && ($sess = Session::ConstructSessionByArray($info[$key])))
                 $arr[$key] = $sess;
-            elseif ($info[$key] == 'close')
+            elseif ($info[$key] == self::CLOSED_KEY)
                 $arr[$key] = NULL;
             else
                 return false;
@@ -71,9 +72,12 @@ class Day
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(bool $traduc = false): string
     {
-        return $this->name;
+        if ($traduc)
+            return Timetable::keyFrTraduction($this->name);
+        else
+            return $this->name;
     }
 
     /**
@@ -103,4 +107,19 @@ class Day
         return $session ? $session->getSessionToString($separator_session, $separator_moment) : $closed_word;
     }
 
+    public function getSessionByName(string $name)
+    {
+        if ($name === self::KEY_DAY)
+            return $this->getDay();
+        else
+            return $this->getNight();
+    }
+
+    public function getAsArray(): array
+    {
+        return [
+            self::KEY_DAY => $this->getDay() ? $this->getDay()->getAsArray() : self::CLOSED_KEY,
+            self::KEY_NIGHT => $this->getNight() ? $this->getNight()->getAsArray() : self::CLOSED_KEY
+        ];
+    }
 }

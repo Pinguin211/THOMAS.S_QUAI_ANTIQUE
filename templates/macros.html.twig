@@ -1,10 +1,20 @@
 {% macro Timetable() %}
     {% set timetable =  getTimetable() %}
     {% if timetable is same as(false) %}
-        <div class="alert"><p>Erreur timetable introuvable ou mauvaise syntaxe, veuillez la mettre à jours</p></div>
+        <div class="alert">
+            <p>Erreur timetable introuvable ou mauvaise syntaxe, veuillez la mettre à jours</p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_timetable') }}" class="bi bi-pen"></a>
+            {% endif %}
+        </div>
     {% else %}
         <div class="row align-items-center">
-            <div class="col-lg-3"><p>Nos Horaires&nbsp;:</p></div>
+            <div class="col-lg-3">
+                <p>Nos Horaires&nbsp;:</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_timetable') }}" class="bi bi-pen"></a>
+                {% endif %}
+            </div>
             <div class="col-lg">
                 {% for day in timetable.getdays %}
                     {{ _self.Day(day) }}
@@ -17,7 +27,7 @@
 
 {% macro Day(day) %}
     <dl class="row align-items-center">
-        <dt class="col day">{{ day.getname }}</dt>
+        <dt class="col day">{{ day.getname(true) }}</dt>
         <div class="col hour">
             <dd class="col">{{ day.getDaySessionString }}</dd>
             <dd class="col">{{ day.getNightSessionString }}</dd>

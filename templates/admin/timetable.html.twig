@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification des horaires{% endblock %}
+
+{% block body %}
+<div>
+    {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
+    {% for day in days_keys %}
+        {{ _self.form_day(form, day, getDayTraduc(day)) }}
+    {% endfor %}
+    <div class="center">
+        {{ form_widget(form.submit, {'label': 'Mettre à jour','attr' : {'class' : 'btn'}}) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% macro form_day(form, day, day_name) %}
+    <div  id="timetable_day">
+        <p class="day_title">{{ day_name }}</p>
+        {{ _self.form_service(form, day~':day', 'Service du midi :') }}
+        {{ _self.form_service(form, day~':night', 'Service du soir :') }}
+    </div>
+{% endmacro %}
+
+{% macro form_service(form, service, service_name) %}
+    <div id="timetable_service" class="div-column">
+        <div class="div-row">
+            <p>{{ service_name }}</p>
+            <div id="timetable_session" class="div-row">
+                {{ _self.form_session(form, service~':open') }}
+                <p> - </p>
+                {{ _self.form_session(form, service~':closed') }}
+            </div>
+        </div>
+        <div class="validation_checkbox">
+            {{ form_row(form[service], {'label': 'Cochez pour fermez à cette heure :'}) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro form_session(form, session) %}
+    <div class="div-row">
+        <div>
+            {{ form_widget(form[session~':hours']) }}
+        </div>
+        <p> h </p>
+        <div>
+            {{ form_widget(form[session~':min']) }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+

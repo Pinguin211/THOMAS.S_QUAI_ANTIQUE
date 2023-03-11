@@ -69,9 +69,9 @@ class JsonFile
             return NULL;
     }
 
-    private function saveFile(): void
+    public function saveFile(): void
     {
-        $json = json_encode($this->info, [JSON_PRETTY_PRINT]);
+        $json = json_encode($this->info, JSON_PRETTY_PRINT);
         file_put_contents($this->path, $json);
     }
 

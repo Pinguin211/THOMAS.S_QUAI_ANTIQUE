@@ -7,8 +7,10 @@ class Session
     private Moment $start;
     private Moment $end;
 
-    private const KEY_OPEN = 'open';
-    private const KEY_CLOSED = 'closed';
+    public const KEY_OPEN = 'open';
+    public const KEY_CLOSED = 'closed';
+
+    public const ARR_KEY = [self::KEY_OPEN, self::KEY_CLOSED];
 
     public function __construct(Moment $start, Moment $end)
     {
@@ -61,5 +63,21 @@ class Session
     public function getSessionToString(string $separator = "-", string $separator_moment = 'h'): string
     {
         return  $this->start->getMomentToString($separator_moment) . $separator . $this->end->getMomentToString($separator_moment);
+    }
+
+    public function getOpenClosedByName(string $name)
+    {
+        if ($name === self::KEY_OPEN)
+            return $this->getStart();
+        else
+            return $this->getEnd();
+    }
+
+    public function getAsArray(): array
+    {
+        return [
+            self::KEY_OPEN => $this->getStart()->getMomentToString('.'),
+            self::KEY_CLOSED => $this->getEnd()->getMomentToString('.')
+        ];
     }
 }

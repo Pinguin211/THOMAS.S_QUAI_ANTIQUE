@@ -31,7 +31,8 @@ class InfoFileInterface
         $json = JsonFile::ConstructWithPath($this->path->getInfoFilePath());
         if (!$json)
             return;
-        #TODO: FINIR CETTE FONCTION
+        $json->setInFile($timetable->getAsArray(), Timetable::KEY_TIMETABLE);
+        $json->saveFile();
 
     }
 

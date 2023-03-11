@@ -19,4 +19,9 @@ class getTimetableExtensionRuntime implements RuntimeExtensionInterface
     {
         return $this->infoFile->getTimetable();
     }
+
+    public function getDayTraduc(string $day): string
+    {
+        return Timetable::keyFrTraduction($day);
+    }
 }

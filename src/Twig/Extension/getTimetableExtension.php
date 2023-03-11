@@ -12,6 +12,7 @@ class getTimetableExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getTimetable', [getTimetableExtensionRuntime::class, 'getTimetable']),
+            new TwigFunction('getDayTraduc', [getTimetableExtensionRuntime::class, 'getDayTraduc']),
         ];
     }
 }

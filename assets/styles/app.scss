@@ -87,6 +87,7 @@ body {
 
     input {
       border-radius: 5px;
+      height: 2em;
     }
 
     ul {
@@ -97,9 +98,11 @@ body {
     .div-column {
       display: flex;
       flex-direction: column;
-      input {
-        width: 100%;
-      }
+    }
+
+    .div-row {
+      display: flex;
+      flex-direction: row;
     }
 
     .no_submit_btn {
@@ -142,6 +145,14 @@ body {
       }
     }
 
+    .div_column_input>div {
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 100%;
+      }
+    }
+
     .center {
       text-align: center;
     }
@@ -171,6 +182,27 @@ body {
         padding: 0.2em 5px;
       }
     }
+
+    /* CSS pour la mis a jours des horaires */
+
+    #timetable_day {
+      .day_title {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+      #timetable_service {
+        margin-bottom: 2em;
+
+        #timetable_session {
+          input {
+            width: 50px;
+          }
+        }
+      }
+    }
+
+
   }
 
 
