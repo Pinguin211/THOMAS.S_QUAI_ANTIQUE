@@ -34,7 +34,7 @@ class SignupController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-            $ingredients = self::getSelectedIngredients($form->get('ingredients_select')->getData(), $entityManager);
+            $ingredients = self::getSelectedIngredients($form->get('ingredients')->getData(), $entityManager);
             $cutlerys = $form->get('cutlerys')->getData();
             $name = explode('@', $user->getEmail())[0];
             $user->setPassword($hasher->hashPassword($user, $user->getPassword()));

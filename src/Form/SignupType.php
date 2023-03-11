@@ -39,7 +39,7 @@ class SignupType extends AbstractType
                     "9 couverts" => 9,
                 ]
             ])
-            ->add('ingredients_select', ChoiceType::class,
+            ->add('ingredients', ChoiceType::class,
                 [
                     'choices' => $this->getIngredientArrayChoice(),
                     'expanded' => true,

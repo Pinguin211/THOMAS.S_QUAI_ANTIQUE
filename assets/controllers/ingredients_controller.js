@@ -20,14 +20,14 @@ export default class extends Controller {
     setAddMethod()
     {
         const ingredients_tab = this.element.querySelector('#ingredients_tab');
-        const ingredients_select = this.element.querySelector('#ingredients_select')
+        const ingredients = this.element.querySelector('#ingredients')
         ingredients_tab.addEventListener('click', (ev) => {
             if (ev.target.matches('button'))
             {
                 const id = ev.target.id
                 if (id)
                 {
-                    const elem = ingredients_select.querySelector(`[value="${id}"]`);
+                    const elem = ingredients.querySelector(`[value="${id}"]`);
                     this.switchSelected(elem, true)
                 }
             }
@@ -36,9 +36,9 @@ export default class extends Controller {
 
     setAll() {
         let i = 0;
-        while (this.element.querySelector(`#signup_ingredients_select_${i}`))
+        while (this.element.querySelector(`#signup_ingredients_${i}`))
         {
-            const element = this.element.querySelector(`#signup_ingredients_select_${i}`)
+            const element = this.element.querySelector(`#signup_ingredients_${i}`)
             element.setAttribute('hidden', '')
             element.disabled = true
             let label = this.element.querySelector(`label[for='${element.getAttribute('id')}']`);
@@ -73,8 +73,8 @@ export default class extends Controller {
     activeAllCheckbox()
     {
         let i = 0;
-        while (this.element.querySelector(`#signup_ingredients_select_${i}`)) {
-            const element = this.element.querySelector(`#signup_ingredients_select_${i}`)
+        while (this.element.querySelector(`#signup_ingredients_${i}`)) {
+            const element = this.element.querySelector(`#signup_ingredients_${i}`)
             element.disabled = false
             i++
         }

@@ -29,7 +29,7 @@
                 <label for="#ingredients_tab">Choisissez vos allergie :</label>
                 {{ macro.IngredientsTab(ingredients_list, ingredients_types) }}
             </div>
-            {{ form_widget(form.ingredients_select, {'id' : 'ingredients_select'}) }}
+            {{ form_widget(form.ingredients, {'id' : 'ingredients'}) }}
             <div class="validation_checkbox">
                 {{ form_row(form.cgu, { 'label' : "Vous acceptez les conditions d'utilisations"}) }}
             </div>
