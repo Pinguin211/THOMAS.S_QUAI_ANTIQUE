@@ -2,14 +2,17 @@ import {Controller} from '@hotwired/stimulus';
 
 
 export default class extends Controller {
+    form_name = ''
+
     connect() {
+        this.setSubmit()
         this.setAll()
         this.setAddMethod()
-        this.setSubmit()
     }
 
     setSubmit() {
         const form = this.element.querySelector('form')
+        this.form_name = form.name
         form.addEventListener('submit', (ev) => {
             ev.preventDefault()
             this.activeAllCheckbox()
@@ -36,9 +39,9 @@ export default class extends Controller {
 
     setAll() {
         let i = 0;
-        while (this.element.querySelector(`#signup_ingredients_${i}`))
+        while (this.element.querySelector(`#${this.form_name}_ingredients_${i}`))
         {
-            const element = this.element.querySelector(`#signup_ingredients_${i}`)
+            const element = this.element.querySelector(`#${this.form_name}_ingredients_${i}`)
             element.setAttribute('hidden', '')
             element.disabled = true
             let label = this.element.querySelector(`label[for='${element.getAttribute('id')}']`);
@@ -73,8 +76,8 @@ export default class extends Controller {
     activeAllCheckbox()
     {
         let i = 0;
-        while (this.element.querySelector(`#signup_ingredients_${i}`)) {
-            const element = this.element.querySelector(`#signup_ingredients_${i}`)
+        while (this.element.querySelector(`#${this.form_name}_ingredients_${i}`)) {
+            const element = this.element.querySelector(`#${this.form_name}_ingredients_${i}`)
             element.disabled = false
             i++
         }

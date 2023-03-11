@@ -41,7 +41,7 @@ class SignupType extends AbstractType
             ])
             ->add('ingredients', ChoiceType::class,
                 [
-                    'choices' => $this->getIngredientArrayChoice(),
+                    'choices' => $this->ingredients->getIngredientArrayChoice(),
                     'expanded' => true,
                     'multiple' => true,
                     'mapped' => false,
@@ -50,14 +50,6 @@ class SignupType extends AbstractType
             ->add('cgu', CheckboxType::class, ['mapped' => false])
             ->add('submit', SubmitType::class)
         ;
-    }
-
-    private function getIngredientArrayChoice(): array
-    {
-        $arr = [];
-        foreach ($this->ingredients->getAllIngredientsOrderById() as $ingredient)
-            $arr[$ingredient->getName() . ' ✕'] = $ingredient->getId();
-        return $arr;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -40,4 +40,15 @@ class Admin
         $galeryImage->setTitle($title);
         $this->entityManager->flush();
     }
+
+    public function addDish(Dish $dish): void
+    {
+        $this->entityManager->persist($dish);
+        $this->entityManager->flush();
+    }
+
+    public function flush(): void
+    {
+        $this->entityManager->flush();
+    }
 }

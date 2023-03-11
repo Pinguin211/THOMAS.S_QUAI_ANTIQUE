@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+{% block title %}Menu{% endblock %}
+
+{% block body %}
+    <div>
+        <div id="inscription" data-controller="ingredients">
+            {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
+            <div class="div_column_input">
+                {{ form_row(form.title, { 'label' : 'Titre :'}) }}
+            </div>
+            <div class="div_column_input">
+                {{ form_row(form.description, { 'label' : 'Description :'}) }}
+            </div>
+            <div>
+                <p>Prix du plats :</p>
+                <div class="div-row">
+                    {{ form_widget(form.euro) }}<p> Euros </p>
+                </div>
+                <div class="div-row">
+                    {{ form_widget(form.centime) }} <p> Centimes</p>
+                </div>
+            </div>
+            <div class="basic_dropdown div-column">
+                <label for="type">Type de plats :</label>
+                <div id="type" class="dropdown_widget">
+                    <i class="bi bi-filter-left"></i>
+                    {{ form_widget(form.type) }}
+                </div>
+            </div>
+            <div class="ingredients_tab_div">
+                <label for="#ingredients_tab">Choisissez les ingredients qui compose le plat </label>
+                {{ macro.IngredientsTab(ingredients_list, ingredients_types) }}
+                <a href="#" class=""><i class="bi bi-arrow-bar-left"></i>Cliquer ici pour ajouter des ingredients</a>
+            </div>
+            {{ form_widget(form.ingredients, {'id' : 'ingredients'}) }}
+            <div class="validation_checkbox">
+                {{ form_row(form.archived, { 'label' : "Chochez pour archivez se plat"}) }}
+            </div>
+            <div class="center">
+                {{ form_row(form.submit, { 'label' : opt, 'attr' : {'class' : 'btn'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+

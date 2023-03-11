@@ -11,6 +11,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DishRepository::class)]
 class Dish
 {
+
+    public const TYPE_ENTRES = 0;
+    public const TYPE_PLATS = 1;
+    public const TYPE_DESSERTS= 2;
+    public const TYPE_FORMULES = 3;
+    public const ARRAY_TYPE = [self::TYPE_ENTRES, self::TYPE_PLATS, self::TYPE_DESSERTS, self::TYPE_FORMULES];
+
+
+    public const KEY_ENTRES = 'Entrés';
+    public const KEY_PLATS = 'Plats';
+    public const KEY_DESSERTS = 'Desserts';
+    public const KEY_FORMULES = 'Formules';
+    public const ARRAY_KEY = [self::KEY_ENTRES, self::KEY_PLATS, self::KEY_DESSERTS, self::KEY_FORMULES];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -126,5 +140,22 @@ class Dish
         $this->ingredients->removeElement($ingredient);
 
         return $this;
+    }
+
+    public function setIngredientsByArray(array $ingredients): void
+    {
+        $this->ingredients = new ArrayCollection($ingredients);
+    }
+
+    public static function getDishTypeNameById(int $id): string
+    {
+        return match ($id)
+        {
+            self::TYPE_ENTRES => self::KEY_ENTRES,
+            self::TYPE_PLATS => self::KEY_PLATS,
+            self::TYPE_DESSERTS => self::KEY_DESSERTS,
+            self::TYPE_FORMULES => self::KEY_FORMULES,
+            default => 'Erreur'
+        };
     }
 }

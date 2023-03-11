@@ -2,10 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Dish;
+use App\Entity\Ingredient;
 use App\Entity\Timetable\Timetable;
+use App\Form\DishType;
 use App\Form\TimetableType;
 use App\Service\AutomaticInterface;
 use App\Service\InfoFileInterface;
+use App\Service\IngredientsInterface;
+use App\Service\RolesInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +38,51 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
             'days_keys' => Timetable::ARR_KEY_DAYS,
             'auto' => $automatic->getParams()
+        ]);
+    }
+
+
+    #[Route('/admin/dish', name: 'app_timetable')]
+    public function dish(AutomaticInterface $automatic, Request $request, IngredientsInterface $ingredients,
+                        RolesInterface $roles, EntityManagerInterface $entityManager): Response
+    {
+        if (!$this->getUser() || !($admin = $this->getUser()->getAdmin($roles, $entityManager)))
+            return $this->redirectToRoute('app_homepage');
+
+        if (isset($_GET['id']) &&
+            ($dish = $entityManager->getRepository(Dish::class)->findOneBy(['id' => $_GET['id']])))
+            $mod = true;
+        else
+        {
+            $dish = new Dish();
+            $mod = false;
+        }
+        $form = $this->createForm(DishType::class, $dish);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            if ($mod)
+            {
+                $admin->flush();
+                return $this->redirectToRoute('app_message', ['title' => 'Plats mis à jours',
+                    'message' => "Le plat à bien était mis a jours",
+                    'redirect_app' => 'app_homepage']);
+            }
+            else
+            {
+                $admin->addDish($dish);
+                return $this->redirectToRoute('app_message', ['title' => 'Plats ajoutés',
+                    'message' => "Le plat à bien était ajouté à la liste",
+                    'redirect_app' => 'app_homepage']);
+            }
+
+        }
+        return $this->render('admin/dish.html.twig', [
+            'form' => $form->createView(),
+            'ingredients_list' => $ingredients->getAllIngredientsListByType(),
+            'ingredients_types' => Ingredient::TYPE_NAMES,
+            'auto' => $automatic->getParams(),
+            'opt' => $mod ? 'Modifier' : 'Ajouter',
         ]);
     }
 }
