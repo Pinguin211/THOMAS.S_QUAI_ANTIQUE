@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\IngredientRepository;
+use App\Validator\IngredientExist;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
@@ -34,9 +37,12 @@ class Ingredient
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Length(max: 32, maxMessage: "Le nom doit contenir au maximum 32 caractères")]
+    #[IngredientExist]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[NotBlank]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $type = null;
 

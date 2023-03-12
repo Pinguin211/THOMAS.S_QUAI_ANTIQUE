@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Type;
 
 class DishType extends AbstractType
 {
@@ -24,11 +26,24 @@ class DishType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $price_constraint = [
+            new Type([
+                'type' => 'integer',
+                'message' => 'Le champ doit être un entier',
+            ]),
+            new Range([
+                'min' => 0,
+                'max' => 999999,
+                'minMessage' => "Lep prix doit être supérieure ou égale à {{ limit }}, on ne donne pas d'argent au client ;)" ,
+                'maxMessage' => "La prix doit être inférieure à 1 000 000 €, Abuse pas quand meme c'est qu'un repas ! :o Défi: Tu peux réussir à donner un prix au dessus d'un 1 000 000 € ;)",
+            ]),
+        ];
+
         $builder
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('euro', IntegerType::class, ['required' => true, 'mapped' => false])
-            ->add('centime', IntegerType::class, ['required' => false, 'mapped' => false])
+            ->add('euro', IntegerType::class, ['required' => true, 'mapped' => false, 'constraints' => $price_constraint])
+            ->add('centime', IntegerType::class, ['required' => false, 'mapped' => false, 'constraints' => $price_constraint])
             ->add('archived', CheckboxType::class, ['required' => false])
             ->add('type', ChoiceType::class, [
                     'choices' => self::getDishTypeArrayChoices(),

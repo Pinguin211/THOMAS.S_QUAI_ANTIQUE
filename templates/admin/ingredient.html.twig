@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+{% block title %}Menu{% endblock %}
+
+{% block body %}
+    <div>
+        <div class="row" data-controller="ingredients">
+            {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
+            <ul>
+                <li>Pour ajouté un ingredient, donner lui un nom qui n'existe pas dans la liste et sélectionner un type</li>
+            </ul>
+            <div class="div_column_input">
+                {{ form_row(form.name, { 'label' : 'Nom :'}) }}
+            </div>
+            <div class="basic_dropdown div-column">
+                <label for="type">Type d'ingrédient :</label>
+                <div id="type" class="dropdown_widget">
+                    <i class="bi bi-filter-left"></i>
+                    {{ form_widget(form.type) }}
+                </div>
+            </div>
+            <div class="ingredients_tab_div">
+                <label for="#ingredients_tab">Selectionnez les ingredients si vous souhaitez les supprimez </label>
+                {{ macro.IngredientsTab(ingredients_list, ingredients_types) }}
+            </div>
+            <ul>
+                <li>Attention: Les ingrédients seront aussi supprimés des plats ou des clients avec lesquels ils sont liés</li>
+            </ul>
+            {{ form_widget(form.ingredients, {'id' : 'ingredients'}) }}
+            <div class="center">
+                {{ form_row(form.submit, { 'label' : 'Mettre à jour', 'attr' : {'class' : 'btn'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+{% endblock %}
+
+
+

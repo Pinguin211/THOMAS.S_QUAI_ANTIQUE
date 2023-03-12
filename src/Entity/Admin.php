@@ -43,8 +43,29 @@ class Admin
 
     public function addDish(Dish $dish): void
     {
-        $this->entityManager->persist($dish);
-        $this->entityManager->flush();
+        $this->addObject($dish);
+    }
+
+    public function addIngredient(Ingredient $ingredient)
+    {
+        $this->addObject($ingredient);
+    }
+
+    public function addObject(Mixed $obj): void
+    {
+        $this->entityManager->persist($obj);
+        $this->flush();
+    }
+
+    public function deleteIngredient(Ingredient $ingredient)
+    {
+        $this->deleteObject($ingredient);
+    }
+
+    public function deleteObject(mixed $obj)
+    {
+        $this->entityManager->remove($obj);
+        $this->flush();
     }
 
     public function flush(): void

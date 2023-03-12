@@ -5,7 +5,7 @@
 
 {% block body %}
     <div>
-        <div id="inscription" data-controller="ingredients">
+        <div data-controller="ingredients">
             {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
             <div class="div_column_input">
                 {{ form_row(form.title, { 'label' : 'Titre :'}) }}
@@ -15,9 +15,11 @@
             </div>
             <div>
                 <p>Prix du plats :</p>
+                {{ form_errors(form.euro) }}
                 <div class="div-row">
                     {{ form_widget(form.euro) }}<p> Euros </p>
                 </div>
+                {{ form_errors(form.centime) }}
                 <div class="div-row">
                     {{ form_widget(form.centime) }} <p> Centimes</p>
                 </div>
@@ -32,7 +34,7 @@
             <div class="ingredients_tab_div">
                 <label for="#ingredients_tab">Choisissez les ingredients qui compose le plat </label>
                 {{ macro.IngredientsTab(ingredients_list, ingredients_types) }}
-                <a href="#" class=""><i class="bi bi-arrow-bar-left"></i>Cliquer ici pour ajouter des ingredients</a>
+                <a href="{{ path('app_ingredient') }}"><i class="bi bi-arrow-bar-left"></i>Cliquer ici pour ajouter des ingredients</a>
             </div>
             {{ form_widget(form.ingredients, {'id' : 'ingredients'}) }}
             <div class="validation_checkbox">

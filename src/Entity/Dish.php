@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: DishRepository::class)]
 class Dish
@@ -30,9 +32,13 @@ class Dish
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Length(max: 32, maxMessage: "Le titre doit contenir au maximum 32 caractères")]
+    #[NotBlank]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[NotBlank]
+    #[Length(max: 255, maxMessage: "La description doit contenir au maximum 255 caractères")]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
@@ -42,6 +48,7 @@ class Dish
     #[ORM\Column]
     private ?bool $archived = null;
 
+    #[NotBlank]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $type = null;
 
