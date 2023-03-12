@@ -51,6 +51,11 @@ class Admin
         $this->addObject($ingredient);
     }
 
+    public function addMenu(Menu $menu)
+    {
+        $this->addObject($menu);
+    }
+
     public function addObject(Mixed $obj): void
     {
         $this->entityManager->persist($obj);

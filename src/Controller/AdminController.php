@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Dish;
 use App\Entity\Ingredient;
+use App\Entity\Menu;
 use App\Entity\Timetable\Timetable;
 use App\Form\DishType;
 use App\Form\IngredientType;
+use App\Form\MenuType;
 use App\Form\TimetableType;
 use App\Service\AutomaticInterface;
 use App\Service\InfoFileInterface;
@@ -108,6 +110,43 @@ class AdminController extends AbstractController
             'ingredients_list' => $ingredients->getAllIngredientsListByType(),
             'ingredients_types' => Ingredient::TYPE_NAMES,
             'auto' => $automatic->getParams(),
+        ]);
+    }
+
+    #[Route('/admin/menu', name: 'app_menu')]
+    public function menu(AutomaticInterface $automatic, Request $request,
+                         RolesInterface $roles, EntityManagerInterface $entityManager): Response
+    {
+        if (!$this->getUser() || !($admin = $this->getUser()->getAdmin($roles, $entityManager)))
+            return $this->redirectToRoute('app_homepage');
+
+        if (isset($_GET['id']) &&
+            ($menu = $entityManager->getRepository(Menu::class)->findOneBy(['id' => $_GET['id']])))
+            $mod = true;
+        else {
+            $menu = new Menu();
+            $mod = false;
+        }
+        $form = $this->createForm(MenuType::class, $menu);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($mod) {
+                $admin->flush();
+                return $this->redirectToRoute('app_message', ['title' => 'Menu mis à jours',
+                    'message' => "Le menu à bien était mis a jours",
+                    'redirect_app' => 'app_homepage']);
+            } else {
+                $admin->addMenu($menu);
+                return $this->redirectToRoute('app_message', ['title' => 'Menu ajoutés',
+                    'message' => "Le Menu à bien était ajouté à la liste",
+                    'redirect_app' => 'app_homepage']);
+            }
+        }
+        return $this->render('admin/menu.html.twig', [
+            'form' => $form->createView(),
+            'auto' => $automatic->getParams(),
+            'opt' => $mod ? 'Modifier' : 'Ajouter',
         ]);
     }
 }

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+{% block title %}Menu{% endblock %}
+
+{% block body %}
+    <div>
+        <div>
+            {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
+            <div class="div_column_input">
+                {{ form_row(form.title, { 'label' : 'Titre :'}) }}
+            </div>
+            <div class="div_column_input">
+                {{ form_row(form.description, { 'label' : 'Description :'}) }}
+            </div>
+            <ul>
+                <li>Votre menu doit contenir au minimum une formule pour être affiché</li>
+            </ul>
+            {{ form_row(form.dishes, { 'label' : 'Choississez les formules à ajouter dans votre menu :',
+                'attr' : {'class' : 'formules_select', 'data-controller' : 'formules'}}) }}
+            <div class="validation_checkbox">
+                {{ form_row(form.archived, { 'label' : "Chochez pour archivez se menu"}) }}
+            </div>
+            <div class="center">
+                {{ form_row(form.submit, { 'label' : opt, 'attr' : {'class' : 'btn'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+

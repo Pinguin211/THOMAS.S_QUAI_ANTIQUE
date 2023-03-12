@@ -228,6 +228,20 @@ body {
       }
     }
 
+    /* CSS pour l'ajout d'un menu */
+    .formules_select {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+      label {
+        @include stickers();
+        padding: 0.3em 5px;
+      }
+    }
+
 
   }
 

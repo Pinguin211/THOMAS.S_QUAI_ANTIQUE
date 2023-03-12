@@ -6,6 +6,8 @@ use App\Repository\MenuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
 class Menu
@@ -15,9 +17,13 @@ class Menu
     #[ORM\Column]
     private ?int $id = null;
 
+    #[NotBlank]
+    #[Length(max: 32, maxMessage: "Le nom doit contenir au maximum 32 caractères")]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[NotBlank]
+    #[Length(max: 255, maxMessage: "La description doit contenir au maximum 255 caractères")]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
@@ -85,6 +91,11 @@ class Menu
         return $this;
     }
 
+    public function setCollectionDishFromArray(array $dish): void
+    {
+        $this->dishes = new ArrayCollection($dish);
+    }
+
     public function isArchived(): ?bool
     {
         return $this->archived;
@@ -95,5 +106,10 @@ class Menu
         $this->archived = $archived;
 
         return $this;
+    }
+
+    public function getMenuTitle(): string
+    {
+        return ucfirst(strtolower('menu ' . $this->title));
     }
 }

@@ -165,4 +165,9 @@ class Dish
             default => 'Erreur'
         };
     }
+
+    public function getFormuleTitle(): string
+    {
+        return ucfirst(strtolower('formule ' . $this->title));
+    }
 }
