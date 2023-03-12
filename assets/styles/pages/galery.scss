@@ -11,6 +11,8 @@
 
 
     .galery_img {
+      border-radius: 5px;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.75);
       width: $img_width;
       padding: 1em 0;
       background-color: black;
