@@ -21,7 +21,7 @@ class Dish
     public const ARRAY_TYPE = [self::TYPE_ENTRES, self::TYPE_PLATS, self::TYPE_DESSERTS, self::TYPE_FORMULES];
 
 
-    public const KEY_ENTRES = 'Entrés';
+    public const KEY_ENTRES = 'Entrées';
     public const KEY_PLATS = 'Plats';
     public const KEY_DESSERTS = 'Desserts';
     public const KEY_FORMULES = 'Formules';
@@ -92,6 +92,13 @@ class Dish
     public function getPrice(): ?int
     {
         return $this->price;
+    }
+
+    public function getStringPrice(string $devise = '€', string $separator = ','): string
+    {
+        $euro = intdiv($this->price, 100);
+        $cent = $this->price % 100;
+        return "$euro$separator$cent$devise";
     }
 
     public function setPrice(int $price): self
@@ -169,5 +176,28 @@ class Dish
     public function getFormuleTitle(): string
     {
         return ucfirst(strtolower('formule ' . $this->title));
+    }
+
+    public function getIngredientsInListByType(): array
+    {
+        $ingredients = $this->getIngredients()->toArray();
+        $arr = [];
+        $i = 0;
+        while ($i < count(Ingredient::TYPE_NAMES))
+        {
+            $arr[$i] = [];
+            foreach ($ingredients as $ingredient)
+            {
+                if ($ingredient->getType() === $i)
+                    $arr[$i][] = $ingredient;
+            }
+            $i++;
+        }
+        return $arr;
+    }
+
+    public function getTypeString(): string
+    {
+        return self::getDishTypeNameById($this->type);
     }
 }

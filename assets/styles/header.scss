@@ -31,9 +31,10 @@ header>nav {
   /* Desktop */
 
   @media (min-width: 992px){
-    height: 100px;
+    height: 75px;
     #logo {
-      height: 100px;
+      max-height: 75px;
+      width: auto;
     }
 
     #connexion {

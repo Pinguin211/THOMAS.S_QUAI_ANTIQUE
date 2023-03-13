@@ -17,6 +17,7 @@ class MessageController extends AbstractController
             'title' => $_GET['title'] ?? 'Erreur',
             'message' => $_GET['message'] ?? "Revenir à l'accueil",
             'redirect_app' => $_GET['redirect_app'] ?? 'app_homepage',
+            'elem_ref' => isset($_GET['elem_ref']) ? '#'.$_GET['elem_ref'] : '',
             'auto' => $auto->getParams()
         ]);
     }

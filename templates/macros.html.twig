@@ -38,12 +38,14 @@
 
 {% macro IngredientsTab(ingredients, type_names) %}
     <div id="ingredients_tab">
-        <table>
+        <table class="w-100">
             <tbody>
             <tr class="row">
                 {% set i = 0 %}
                 {% for name in type_names %}
-                    <td class="col-3">{{ _self.IngredientsList(name, ingredients[i]) }}</td>
+                    {% if ingredients[i]|length %}
+                        <td class="col-3">{{ _self.IngredientsList(name, ingredients[i]) }}</td>
+                    {% endif %}
                     {% set i = i + 1 %}
                 {% endfor %}
             </tr>

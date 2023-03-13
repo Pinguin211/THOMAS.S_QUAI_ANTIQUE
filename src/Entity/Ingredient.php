@@ -26,7 +26,7 @@ class Ingredient
         'Fruits', // 1
         'Fruits à coque', // 2
         'Viandes', // 3
-        'Poissons', // 4
+        'Mer', // 4
         'Épices', // 5
         'Fromages', // 6
         'Autres' // 7

@@ -46,7 +46,7 @@ class AdminController extends AbstractController
 
     #[Route('/admin/dish', name: 'app_dish')]
     public function dish(AutomaticInterface $automatic, Request $request, IngredientsInterface $ingredients,
-                         RolesInterface     $roles, EntityManagerInterface $entityManager): Response
+                         RolesInterface $roles, EntityManagerInterface $entityManager): Response
     {
         if (!$this->getUser() || !($admin = $this->getUser()->getAdmin($roles, $entityManager)))
             return $this->redirectToRoute('app_homepage');
@@ -65,12 +65,14 @@ class AdminController extends AbstractController
                 $admin->flush();
                 return $this->redirectToRoute('app_message', ['title' => 'Plats mis à jours',
                     'message' => "Le plat à bien était mis a jours",
-                    'redirect_app' => 'app_homepage']);
+                    'redirect_app' => 'app_menu',
+                    'elem_ref' => 'dish'.$dish->getId()]);
             } else {
                 $admin->addDish($dish);
                 return $this->redirectToRoute('app_message', ['title' => 'Plats ajoutés',
                     'message' => "Le plat à bien était ajouté à la liste",
-                    'redirect_app' => 'app_homepage']);
+                    'redirect_app' => 'app_menu',
+                    'elem_ref' => 'dish'.$dish->getId()]);
             }
 
         }
@@ -113,7 +115,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/menu', name: 'app_menu')]
+    #[Route('/admin/menu', name: 'app_add_menu')]
     public function menu(AutomaticInterface $automatic, Request $request,
                          RolesInterface $roles, EntityManagerInterface $entityManager): Response
     {
@@ -135,12 +137,14 @@ class AdminController extends AbstractController
                 $admin->flush();
                 return $this->redirectToRoute('app_message', ['title' => 'Menu mis à jours',
                     'message' => "Le menu à bien était mis a jours",
-                    'redirect_app' => 'app_homepage']);
+                    'redirect_app' => 'app_menu',
+                    'elem_ref' => 'menu'.$menu->getId()]);
             } else {
                 $admin->addMenu($menu);
                 return $this->redirectToRoute('app_message', ['title' => 'Menu ajoutés',
                     'message' => "Le Menu à bien était ajouté à la liste",
-                    'redirect_app' => 'app_homepage']);
+                    'redirect_app' => 'app_menu',
+                    'elem_ref' => 'menu'.$menu->getId()]);
             }
         }
         return $this->render('admin/menu.html.twig', [

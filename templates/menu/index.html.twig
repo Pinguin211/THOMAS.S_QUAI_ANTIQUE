@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+
+{% block title %}Menu{% endblock %}
+
+{% block body %}
+<div class="basic_page">
+    {% for typeName in dishTypes %}
+        {% if dishes[typeName]|length %}
+            {{ _self.showDishes(typeName, dishes[typeName], ingredientTypes) }}
+            <hr>
+        {% endif %}
+    {% endfor %}
+    {{ _self.showMenus(menus) }}
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <hr>
+        {% if archived_dishes|length or archived_menus|length %}
+            <div class="dishes_type">
+                <div class="center">
+                    <h2 class="stickers">Archivés</h2>
+                </div>
+                {% for archived_dish in archived_dishes %}
+                    {{ _self.showArchivedDish(archived_dish) }}
+                {% endfor %}
+                {% for archived_menu in archived_menus %}
+                    {{ _self.showArchivedMenu(archived_menu) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="">
+            <div class="center">
+                <a href="{{path('app_dish') }}" class="btn" type="button" style="color: white">Ajouter un plats</a>
+                <a href="{{ path('app_add_menu') }}" class="btn" type="button" style="color: white">Ajouter un menu</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% macro showDishes(typeName, arr_dish, ingredientTypes) %}
+    <div class="dishes_type">
+        <div class="center">
+            <h2 class="stickers">{{ typeName }}</h2>
+        </div>
+        <div>
+            {% for dish in arr_dish %}
+                {{ _self.showDish(dish, ingredientTypes) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro showDish(dish, ingredientTypes) %}
+    <div class="dish" id="dish{{ dish.getid }}">
+        <div class="div-row justify-content-between title_dish">
+            <p>{{ dish.gettitle }}</p>
+            <p>{{ dish.getstringprice }}</p>
+        </div>
+        <div class="div-row justify-content-between description_dish">
+            <p>{{ dish.description }}</p>
+            <i class="bi bi-caret-right-fill" data-bs-toggle="collapse" data-bs-target="#collapsibleInfo{{ dish.getid }}" style="cursor: pointer"></i>
+        </div>
+        <div id="collapsibleInfo{{ dish.getid }}" class="collapse">
+            <ul>
+                <li>
+                    {{ macro.IngredientsTab(dish.getIngredientsInListByType, ingredientTypes) }}
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <hr>
+                    <li>
+                        <a href="{{ path('app_dish', {'id': dish.getid}) }} }}" style="color: white">
+                            <i class="bi bi-pencil-square"> Cliquer ici pour modifier se plat</i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro showMenus(menus) %}
+    {% if menus|length %}
+        <div class="dishes_type">
+            <div class="center">
+                <h2 class="stickers">Menus</h2>
+            </div>
+            <div>
+                {% for menu in menus %}
+                    {{ _self.showMenu(menu) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro showMenu(menu) %}
+    <div class="dishes_type dish" id="menu{{ menu.getid }}">
+        <div class="center">
+            <h3 class="title_dish">{{ menu.getmenutitle }}</h3>
+            <p>{{ menu.getdescription }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="end">
+                    <a href="{{ path('app_add_menu', {'id': menu.getid}) }} }}" style="color: white">
+                        <i class="bi bi-pencil-square"> Cliquer ici pour modifier ce menu</i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        {% if menu.getdishes|length %}
+        <ul>
+            {% for dish in menu.getdishes %}
+                {% if dish.archived is same as false %}
+                    <li>
+                        {{ _self.showFormule(dish) }}
+                    </li>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro showFormule(formule) %}
+    <div id="dish{{ formule.getid }}">
+        <div class="center">
+            <h4 class="title_dish">{{ formule.getformuletitle }}</h4>
+            <p>{{ formule.getstringprice }}</p>
+        </div>
+        <div>
+            <p class="description_dish">{{ formule.getdescription|nl2br }}</p>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="end">
+                <a href="{{ path('app_dish', {'id': formule.getid}) }} }}" style="color: white">
+                    <i class="bi bi-pencil-square"> Cliquer ici pour modifier cette formule</i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro showArchivedDish(dish) %}
+    <div class="dish archived" id="dish{{ dish.getid }}">
+        <div class="div-row justify-content-between title_dish" style="color: #CB2117">
+            <p>{{ dish.gettitle }}</p>
+            <p>{{ dish.gettypestring }}</p>
+        </div>
+        <div class="end">
+            <a href="{{ path('app_dish', {'id': dish.getid}) }} }}" style="color: #CB2117">
+                <i class="bi bi-pencil-square"> Cliquer ici pour modifier se plat</i>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro showArchivedMenu(menu) %}
+    <div class="dish archived" id="menu{{ menu.getid }}">
+        <div class="div-row justify-content-between title_dish" style="color: #CB2117">
+            <p>{{ menu.gettitle }}</p>
+            <p>Menu</p>
+        </div>
+        <div class="end">
+            <a href="{{ path('app_add_menu', {'id': menu.getid}) }} }}" style="color: #CB2117">
+                <i class="bi bi-pencil-square"> Cliquer ici pour modifier se menu</i>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
