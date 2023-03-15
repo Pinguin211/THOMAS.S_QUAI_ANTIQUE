@@ -3,12 +3,15 @@
 namespace App\Service;
 
 use App\Entity\Timetable\Timetable;
-use App\Kernel;
 use App\Lib\JsonFile;
 
 class InfoFileInterface
 {
     private PathInterface $path;
+
+    public const KEY_TIMETABLE = Timetable::KEY_TIMETABLE;
+    public const KEY_MAX_CUTLERYS = 'max_cutlerys';
+    public const DEFAULT_MAX_CUTLERYS = 130;
 
     public function __construct(PathInterface $path)
     {
@@ -19,7 +22,7 @@ class InfoFileInterface
     {
         if (!($file = JsonFile::ConstructWithPath($this->path->getInfoFilePath())))
             return false;
-        elseif (!($arr = $file->getInFile(Timetable::KEY_TIMETABLE)))
+        elseif (!($arr = $file->getInFile(self::KEY_TIMETABLE)))
             return false;
         elseif (!is_array($arr))
             return false;
@@ -31,9 +34,27 @@ class InfoFileInterface
         $json = JsonFile::ConstructWithPath($this->path->getInfoFilePath());
         if (!$json)
             return;
-        $json->setInFile($timetable->getAsArray(), Timetable::KEY_TIMETABLE);
+        $json->setInFile($timetable->getAsArray(), self::KEY_TIMETABLE);
         $json->saveFile();
+    }
 
+
+    public function getCutlerys(): int
+    {
+        if (!($file = JsonFile::ConstructWithPath($this->path->getInfoFilePath())) ||
+            !($max_cutlerys = $file->getInFile(self::KEY_MAX_CUTLERYS)))
+            return self::DEFAULT_MAX_CUTLERYS;
+        else
+            return $max_cutlerys;
+    }
+
+    public function setCutlerys(int $max_cutlerys): void
+    {
+        $json = JsonFile::ConstructWithPath($this->path->getInfoFilePath());
+        if (!$json)
+            return;
+        $json->setInFile($max_cutlerys, self::KEY_MAX_CUTLERYS);
+        $json->saveFile();
     }
 
 }

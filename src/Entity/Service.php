@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 class Service
 {
+    public const DAY_KEY = 1;
+    public const NIGHT_KEY = 2;
+    public const DAY_TYPE = 'day';
+    public const NIGHT_TYPE = 'night';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -102,5 +107,16 @@ class Service
         }
 
         return $this;
+    }
+
+    public function isComplet(): bool
+    {
+        $i = 0;
+        foreach ($this->reservations as $reservation)
+            $i += $reservation->getCutlerys();
+        if ($i >= $this->max_cutlerys)
+            return true;
+        else
+            return false;
     }
 }

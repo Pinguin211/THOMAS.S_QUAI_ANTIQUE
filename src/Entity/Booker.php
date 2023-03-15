@@ -101,4 +101,9 @@ class Booker
 
         return $this;
     }
+
+    public function setAllergysFromArray(array $ingredients)
+    {
+        $this->allergys = new ArrayCollection($ingredients);
+    }
 }

@@ -9,6 +9,10 @@ class Day
     public const ARR_KEY = [self::KEY_DAY, self::KEY_NIGHT];
     private const CLOSED_KEY = 'closed';
 
+    public const KEY_TYPE_DAY = 1;
+    public const KEY_TYPE_NIGHT = 2;
+
+
     private string $name;
     private Session|null $day;
     private Session|null $night;
@@ -107,12 +111,24 @@ class Day
         return $session ? $session->getSessionToString($separator_session, $separator_moment) : $closed_word;
     }
 
-    public function getSessionByName(string $name)
+    public function getSessionByName(string $name): Session | null
     {
         if ($name === self::KEY_DAY)
             return $this->getDay();
-        else
+        elseif (self::KEY_NIGHT)
             return $this->getNight();
+        else
+            return null;
+    }
+
+    public function getSessionByKeyType(int $type): Session | null
+    {
+        if ($type === self::KEY_TYPE_DAY)
+            return $this->getDay();
+        elseif ($type === self::KEY_TYPE_NIGHT)
+            return $this->getNight();
+        else
+            return null;
     }
 
     public function getAsArray(): array

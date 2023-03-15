@@ -2,6 +2,7 @@
 
 namespace App\Entity\Timetable;
 
+
 class Timetable
 {
     public const KEY_TIMETABLE = 'timetable';
@@ -93,4 +94,23 @@ class Timetable
         return $arr;
     }
 
+    public function getDayFromDateTime(\DateTime $dateTime): Day | false
+    {
+        return $this->getDay(strtolower($dateTime->format('l')));
+    }
+
+    public function getHourFromStage(int $stage, int $session_key_type, \DateTime $date, int $interval = 15): \DateTime | false
+    {
+        if (!($day = $this->getDayFromDateTime($date)) ||
+            !($sess = $day->getSessionByKeyType($session_key_type)))
+            return false;
+        $start = $sess->getStart()->getMomentToDateTime($date);
+        $stage = abs($stage);
+        while ($stage > 0)
+        {
+            $start->modify("+$interval minutes");
+            $stage--;
+        }
+        return $start;
+    }
 }

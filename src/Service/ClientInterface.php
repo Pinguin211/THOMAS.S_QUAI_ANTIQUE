@@ -18,15 +18,21 @@ class ClientInterface
     {
         if (!$this->roles->is_client($user) || $this->ClientExist($user))
             return false;
-        $booker = new Booker($name, $allergys);
-        $this->entityManager->persist($booker);
-        $this->entityManager->flush($booker);
+        $booker = $this->CreateBooker($name, $allergys);
         $client = new Client($booker, $user, $cutlerys);
         $this->entityManager->persist($client);
         $this->entityManager->flush();
         $user->setClient($client);
         $this->entityManager->flush();
         return true;
+    }
+
+    public function CreateBooker(string $name, array $allergys): Booker
+    {
+        $booker = new Booker($name, $allergys);
+        $this->entityManager->persist($booker);
+        $this->entityManager->flush($booker);
+        return $booker;
     }
 
     public function ClientExist(User $user): bool

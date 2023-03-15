@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+    <div>
+        <div id="reservation" data-controller="ingredients reservation">
+            {{ form_start(form, {'attr': {'class': 'basic_form rounded-3'}}) }}
+            <div class="div_column_input">
+                {{ form_row(form.name, { 'label' : 'Nom de la reservation :'}) }}
+            </div>
+            {{ form_errors(form.cutlerys) }}
+            {{ form_errors(form.date) }}
+            <div class="div-row justify-content-between">
+                <div id="cutlerys" class="dropdown_widget reservation">
+                    <i class="bi bi-person"></i>
+                    {{ form_widget(form.cutlerys) }}
+                </div>
+                <div id="date" class="dropdown_widget reservation">
+                    <i class="bi bi-calendar-date"></i>
+                    {{ form_widget(form.date, {'id' : 'date_widget'}) }}
+                </div>
+            </div>
+            <div id="stage_list"></div>
+            <div class="validation_checkbox">
+                {{ form_row(form.allergy, { 'label' : "Cochez cette case pour ajouter des allergies et les affichés aux serveurs"}) }}
+            </div>
+            <div id="ingredients_tab_div" class="ingredients_tab_div">
+                <label for="#ingredients_tab">Choisissez vos allergie :</label>
+                {{ macro.IngredientsTab(ingredients_list, ingredients_types) }}
+            </div>
+            {{ form_widget(form.ingredients, {'id' : 'ingredients'}) }}
+            <div class="center">
+                {{ form_row(form.submit, { 'label' : "RÉSERVÉ", 'id': 'submit_btn', 'attr' : {'class' : 'btn disabled'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -85,4 +85,10 @@ class Moment
             return 0;
         return $min;
     }
+
+    public function getMomentToDateTime(\DateTime $date): \DateTime | false
+    {
+        $str = $date->format('Y-m-d') . ' ' . $this->getMomentToString(':');
+        return \DateTime::createFromFormat('Y-m-d H:i', $str);
+    }
 }

@@ -151,6 +151,7 @@ body {
     .validation_checkbox>div {
       display: flex;
       flex-direction: row;
+      align-items: center;
       input {
         order: 1;
         margin-right: 10px;
@@ -168,7 +169,9 @@ body {
       @include box(#906427);
       display: flex;
       flex-direction: row;
-      select {
+      align-items: center;
+      select, input {
+        padding: 0 10px;
         width: 100%;
         background-color: #906427;
         color: white;
@@ -279,6 +282,31 @@ body {
       }
     }
 
+
+    /* CSS Pour les reservation  */
+
+    .reservation {
+
+      &.dropdown_widget {
+        width: 40%;
+      }
+
+      &.btn_list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .no_submit_btn {
+          margin: 0.5em 10px;
+          font-size: 1.5em;
+        }
+
+        .validate {
+          background-color: #1b9448;
+          box-shadow: none;
+        }
+      }
+
+    }
 
   }
 

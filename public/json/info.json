@@ -3,10 +3,7 @@
     "timetable": {
         "monday": {
             "day": "closed",
-            "night": {
-                "open": "19.00",
-                "closed": "22.00"
-            }
+            "night": "closed"
         },
         "tuesday": {
             "day": {
@@ -20,7 +17,7 @@
         },
         "wednesday": {
             "day": {
-                "open": "11.00",
+                "open": "06.00",
                 "closed": "15.00"
             },
             "night": {

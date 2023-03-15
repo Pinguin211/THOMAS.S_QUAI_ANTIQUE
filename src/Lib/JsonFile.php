@@ -2,8 +2,6 @@
 
 namespace App\Lib;
 
-use App\Service\PathInterface;
-
 class JsonFile
 {
     private string $path;
