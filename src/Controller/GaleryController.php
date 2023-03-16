@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Service\AutomaticInterface;
 use App\Service\CheckerInterface;
 use App\Service\GaleryInterface;
+use App\Service\InteractionInterface;
 use App\Service\RolesInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,12 +48,11 @@ class GaleryController extends AbstractController
     }
 
     #[Route('/galery/delete_image', name: 'app_delete_image')]
-    public function deleteImage(GaleryInterface $galery, CheckerInterface $checker,
-                             RolesInterface $roles, EntityManagerInterface $entityManager): Response
+    public function deleteImage(GaleryInterface $galery, InteractionInterface $interaction,EntityManagerInterface $entityManager): Response
     {
-        if (!($admin = self::getAdmin($checker, $entityManager, $roles)))
+        if (!($admin = $interaction->getAdmin($_POST)))
             return new Response('Bad id', 401);
-        if (!($info = self::getInfo($checker, $_POST['info'], ['image'])))
+        if (!($info = $interaction->getInfo($_POST, 'info', ['image'])))
             return new Response('Bad parameter', 400);
         if (!($image = $entityManager->getRepository(GaleryImage::class)->findOneBy(['id'=>$info['image']])))
             return new Response('Image not exist', 400);
@@ -61,13 +61,12 @@ class GaleryController extends AbstractController
     }
 
 
-    #[Route('/galery/set_title_image', name: 'app_set_title_image')]
-    public function setTitleImage(GaleryInterface $galery, CheckerInterface $checker,
-                                RolesInterface $roles, EntityManagerInterface $entityManager): Response
+    #[Route('/galery/set_title_image')]
+    public function setTitleImage(InteractionInterface $interaction, EntityManagerInterface $entityManager): Response
     {
-        if (!($admin = self::getAdmin($checker, $entityManager, $roles)))
+        if (!($admin = $interaction->getAdmin($_POST)))
             return new Response('Bad id', 401);
-        if (!($info = self::getInfo($checker, $_POST['info'], ['image', 'title'])))
+        if (!($info = $interaction->getInfo($_POST, 'info', ['image', 'title'])))
             return new Response('Bad parameter', 400);
         if (!($image = $entityManager->getRepository(GaleryImage::class)->findOneBy(['id' => $info['image']])))
             return new Response('Image not exist', 400);
@@ -77,27 +76,5 @@ class GaleryController extends AbstractController
             return new Response('Le titre est à jours', 200);
         $admin->setGaleryImageTitle($image, $info['title']);
         return new Response('Titre correctement modifier', 200);
-    }
-
-    private static function getAdmin(CheckerInterface $checker, EntityManagerInterface $entityManager,
-                                     RolesInterface $roles): Admin | false
-    {
-        if (!$checker->checkData($_POST, 'array', ['id', 'password', 'info']) ||
-            !($user = $entityManager->getRepository(User::class)->findOneBy(['id' => $_POST['id']])) ||
-            $user->getPassword() !== $_POST['password'] ||
-            !($admin = $user->getAdmin($roles, $entityManager)))
-            return false;
-        else
-            return $admin;
-    }
-
-
-    private static function getInfo(CheckerInterface $checker, string $info, array $expected_value): array | false
-    {
-        $info = json_decode($_POST['info'], true);
-        if (!$checker->checkData($info, 'array', $expected_value))
-            return false;
-        else
-            return $info;
     }
 }
