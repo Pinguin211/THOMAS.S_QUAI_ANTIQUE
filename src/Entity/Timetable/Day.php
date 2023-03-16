@@ -31,7 +31,11 @@ class Day
             return false;
         $arr = [];
         foreach (self::ARR_KEY as $key) {
-            if (is_array($info[$key]) && ($sess = Session::ConstructSessionByArray($info[$key])))
+            if ($key === self::KEY_DAY)
+                $type = self::KEY_TYPE_DAY;
+            else
+                $type = self::KEY_TYPE_NIGHT;
+            if (is_array($info[$key]) && ($sess = Session::ConstructSessionByArray($info[$key], $type)))
                 $arr[$key] = $sess;
             elseif ($info[$key] == self::CLOSED_KEY)
                 $arr[$key] = NULL;
@@ -137,5 +141,25 @@ class Day
             self::KEY_DAY => $this->getDay() ? $this->getDay()->getAsArray() : self::CLOSED_KEY,
             self::KEY_NIGHT => $this->getNight() ? $this->getNight()->getAsArray() : self::CLOSED_KEY
         ];
+    }
+
+    public function getNextSessionDayFromDateTime(\DateTime $dateTime): Session | false
+    {
+        if (($day = $this->getDay()) && ($hour = $day->getStart()->getMomentToDateTime($dateTime)))
+        {
+            if ($hour > $dateTime)
+                return $day;
+        }
+        return false;
+    }
+
+    public function getNextSessionNightFromDateTime(\DateTime $dateTime): Session | false
+    {
+        if (($night = $this->getNight()) && ($hour = $night->getStart()->getMomentToDateTime($dateTime)))
+        {
+            if ($hour > $dateTime)
+                return $night;
+        }
+        return false;
     }
 }

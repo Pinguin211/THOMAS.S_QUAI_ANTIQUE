@@ -1,0 +1,115 @@
+@mixin responsive_image
+{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+
+  .flex {
+    display: flex;
+  }
+
+  .responsiveImage
+  {
+    @include responsive_image;
+  }
+
+  /* CSS du caroussel */
+  #homepageCarousel {
+    @media (min-width: 992px){
+      $width: 65vw;
+      height: calc(#{$width}/3);
+      width: $width;
+    }
+    @media (max-width: 992px) {
+      $width: 100vw;
+      height: calc(#{$width}/3);
+      width: $width;
+    }
+    overflow: hidden;
+    margin: auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
+    .carousel-inner, .carousel-item {
+      height: 100%;
+    }
+    .carousel-caption, .carousel-indicators {
+      opacity: 0;
+      transition: 300ms ease;
+      h5 {
+        font-weight: bold;
+      }
+    }
+    &:hover {
+      .carousel-caption, .carousel-indicators {
+        opacity: 1;
+      }
+    }
+    .carouselImage {
+      @include responsive_image;
+    }
+  }
+
+  /* Css de la photo reservation */
+
+  #reservation_image {
+    position: relative;
+    p {
+      color: white;
+      background-color: rgba(128, 128, 128, 0.8);
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      top: 0;
+    }
+  }
+
+  /* css pour les horaires et le menu */
+
+  #time_table, #menu_table {
+    background-color: #B6AC97;
+    color: black;
+    border: solid black 1px;
+    align-items: center;
+    .stickers {
+      font-size: 1.5em;
+      padding: 0.5em 10px;
+    }
+
+    >div {
+      margin: 1em;
+    }
+
+    .time_horaire {
+      >p {
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+    }
+
+    .menu_dish {
+      margin-bottom: 1em;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      >div {
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+    }
+
+    .div-row, .div-column {
+      align-items: center;
+      width: 100%;
+    }
+
+  }
+
+  @media (max-width: 992px) {
+    #reservation_button {
+      margin: 3em 0;
+    }
+  }
+
+}

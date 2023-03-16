@@ -21,7 +21,8 @@ class ReservationController extends AbstractController
 {
     #[Route('/reservation', name: 'app_reservation')]
     public function index(AutomaticInterface $automatic, Request $request, InfoFileInterface $infoFile,
-                          IngredientsInterface $ingredients, EntityManagerInterface $entityManager): Response
+                          IngredientsInterface $ingredients, EntityManagerInterface $entityManager,
+                          ReservationInterface $reservationInterface): Response
     {
         $reservation = new Reservation();
         if ($this->getUser())
@@ -31,7 +32,9 @@ class ReservationController extends AbstractController
             $reservation->setBooker($client->getBooker());
         }
         $form = $this->createForm(ReservationType::class, $reservation);
-        $form->get('date')->setData(new DateTime());
+        if (!($next_reservation_date = $reservationInterface->getNextDateReservation()))
+            $next_reservation_date = new DateTime();
+        $form->get('date')->setData($next_reservation_date);
         if ($this->getUser())
             $form->get('name')->setData($this->getUser()->getClient()->getBooker()->getName());
         $form->handleRequest($request);

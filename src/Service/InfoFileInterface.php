@@ -42,7 +42,7 @@ class InfoFileInterface
     public function getCutlerys(): int
     {
         if (!($file = JsonFile::ConstructWithPath($this->path->getInfoFilePath())) ||
-            !($max_cutlerys = $file->getInFile(self::KEY_MAX_CUTLERYS)))
+            !is_int($max_cutlerys = $file->getInFile(self::KEY_MAX_CUTLERYS)))
             return self::DEFAULT_MAX_CUTLERYS;
         else
             return $max_cutlerys;

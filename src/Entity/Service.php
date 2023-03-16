@@ -111,12 +111,22 @@ class Service
 
     public function isComplet(): bool
     {
-        $i = 0;
-        foreach ($this->reservations as $reservation)
-            $i += $reservation->getCutlerys();
-        if ($i >= $this->max_cutlerys)
+        if ($this->getReservedCutlerys() >= $this->max_cutlerys)
             return true;
         else
             return false;
+    }
+
+    public function getReservedCutlerys(): int
+    {
+        $i = 0;
+        foreach ($this->reservations as $reservation)
+            $i += $reservation->getCutlerys();
+        return $i;
+    }
+
+    public function getFreeReservationCutlerys(): int
+    {
+        return $this->getMaxCutlerys() - $this->getReservedCutlerys();
     }
 }
