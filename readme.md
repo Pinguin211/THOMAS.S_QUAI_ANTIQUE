@@ -31,8 +31,6 @@ Ci-dessous les liens et tutoriels d'installation pour les prérequis
     sudo add-apt-repository ppa:ondrej/php
     sudo apt update
     sudo apt install php8.2 php8.2-cli php8.2-{curl,bz2,mbstring,intl,xml,mysql}
-    sudo apt install php-mysql
-    sudo apt install php-xml
 #### MySql - https://doc.ubuntu-fr.org/mysql
 
 #### Nodejs (VERSION 19)
@@ -66,7 +64,7 @@ Puis cloner le projet à partir de son url
 
 Placer vous ensuite dans le dossier du projet
 
-    cd
+    cd THOMAS.S_QUAI_ANTIQUE
 
 ---
 
@@ -105,7 +103,7 @@ Si vous effectuer cette étape vous pourrez passer l'étape de la migration de l
 Si vous réalisez cette étape, copier aussi les photos de démonstration
 pour pouvoir les voir sur le site avec la commande suivante
 
-    cp sources/galery public/images/galery
+    sudo cp -r sources/galery public/images
 
 
 ---
@@ -155,6 +153,10 @@ Vous devriez avoir ce résultat :
 Vous allez récupérer les dépendances à node.js avec la command suivante
 
     sudo npm install
+
+Si il y a un message qiu vous affiche des vulnérabilités effectuer la commande suivante :
+
+    sudo npm audit fix
 
 Il faut maintenant compiler les assets avec la commande suivante
 
@@ -219,7 +221,7 @@ Vous allez ensuite vider les cache avec cette commande
 Pour finir vous effectuerez les commandes suivantes pour désactiver la page par défauts d'apache2,
 déplacer le fichier de configuration apache2 et recharger apache
 
-    sudo a2dissites 000-default.conf
+    sudo a2dissite 000-default.conf
     sudo sources/copie_conf.sh
     sudo systemctl reload apache2.service
 
