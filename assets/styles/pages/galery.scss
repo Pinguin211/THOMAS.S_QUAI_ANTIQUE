@@ -4,7 +4,12 @@
 ) {
   #galery {
     background-color: #392C1E;
-    width: calc(#{$view_image} * #{$img_width} + #{$img_width} / 2);
+    @media (min-width: 992px) {
+      width: calc(#{$view_image} * #{$img_width} + #{$img_width} / 2);
+    }
+    @media (max-width: 992px) {
+      width: 100%;
+    }
     height: 100%;
     text-align: center;
     margin: auto;
@@ -13,14 +18,20 @@
     .galery_img {
       border-radius: 5px;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.75);
-      width: $img_width;
+      @media (min-width: 992px) {
+        width: $img_width;
+      }
+      @media (max-width: 992px) {
+        width: 90%;
+      }
       padding: 1em 0;
       background-color: black;
       margin: 1em auto;
       transition: 300ms ease;
       img {
         width: 100%;
-        height: calc(#{$img_width}/(1 + (9/7)));
+        height: 100%;
+        object-fit: cover;
       }
       label {
         background-color: rgba(128, 128, 128, 0.8);
@@ -82,7 +93,6 @@ body {
         width: 60%;
       }
       @media (max-width: 992px) {
-        margin-top: 10vh;
         width: 95%
       }
       position: fixed;
