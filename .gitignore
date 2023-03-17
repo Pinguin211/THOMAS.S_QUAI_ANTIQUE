@@ -17,6 +17,6 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 /tests
-/sources
+/sources/test
 .idea
 /public/images/galery
