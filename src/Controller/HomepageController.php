@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
     private const CAROUSEL_LIMIT = 3;
-    private const MENUS_LIMIT = 5;
+    private const MENUS_LIMIT = 6;
 
     #[Route('/', name: 'app_homepage')]
     public function index(AutomaticInterface $auto, EntityManagerInterface $entityManager,
