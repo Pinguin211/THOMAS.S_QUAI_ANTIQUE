@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% import 'macros.html.twig' as macro %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('reservation_list') }}
+{% endblock %}
+
+{% block body %}
+    <div class="basic_page">
+        <div data-controller="cutlerys">
+            <ul><li>Pour les services ayant deja reçu des reservations, le nombre de couverts doit être changé directement sur le service</li></ul>
+            <label for="defaut_max_cutlerys">Nombre de couverts maximum par service :</label>
+            <div>
+                <input id="defaut_max_cutlerys" type="number" value="{{ max_default_cutlerys }}">
+                <button type="button" id="set_default_cutlerys" class="btn bi bi-check-circle"
+                        style="background-color: #1b9448"></button>
+            </div>
+        </div>
+        <div data-controller="reservationList">
+            <div>
+                <label for="service_date">Choisissez une date pour voir les reservations :</label>
+                <input id="service_date" type="date" value="{{ first_date }}">
+            </div>
+            <div id="table_services">
+                <div id="day_service"></div>
+                <div id="night_service"></div>
+            </div>
+        </div>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div hidden id="isAdmin">1</div>
+        <div hidden id="user_id">{{ app.user.getid }}</div>
+        <div hidden id="user_password">{{ app.user.getpassword }}</div>
+    {% endif %}
+{% endblock %}
+
+
+

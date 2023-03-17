@@ -33,10 +33,12 @@
                         data-bs-popper="static">
                         <li>
                             {% if app.user %}
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <div class="space">
-                                    <a href="#">Mon profil</a>
+                                    <a href="{{ path('app_reservation_list') }}">Liste des reservations</a>
                                 </div>
                                 <hr>
+                            {% endif %}
                                 <div class="space">
                                     <a href="{{ path('app_logout') }}">Se déconnecter</a>
                                 </div>

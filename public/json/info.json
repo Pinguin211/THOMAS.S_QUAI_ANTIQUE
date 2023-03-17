@@ -1,5 +1,5 @@
 {
-    "max_cutlerys": 1,
+    "max_cutlerys": 200,
     "timetable": {
         "monday": {
             "day": "closed",

@@ -1,0 +1,41 @@
+main {
+
+  .reservation_table {
+    width: 100%;
+    background-color: #906427;
+    border: solid black 1px;
+    padding: 3%;
+    margin: 3em 0;
+    color: white;
+
+    .title {
+      p {
+        font-size: 1.5em;
+      }
+    }
+
+    .table {
+      color: black;
+      margin-top: 2em;
+      background-color: white;
+      border: black solid 1px;
+      width: 100%;
+      height: 20em;
+      overflow: auto;
+      table {
+        width: 100%;
+      }
+      .small {
+        width: 15%;
+      }
+      .big {
+        width: 30%;
+      }
+      thead {
+        font-style: italic;
+      }
+    }
+
+  }
+
+}

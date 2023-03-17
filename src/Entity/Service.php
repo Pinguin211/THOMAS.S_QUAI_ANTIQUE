@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Timetable\Timetable;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -128,5 +129,42 @@ class Service
     public function getFreeReservationCutlerys(): int
     {
         return $this->getMaxCutlerys() - $this->getReservedCutlerys();
+    }
+
+    public function getAsArray(Timetable $timetable): array
+    {
+        $arr_reservations = [];
+        $date = \DateTime::createFromFormat('Y-m-d H:i', $this->getDate()->format('Y-m-d H:i'));
+        foreach ($this->getReservations() as $reservation)
+            $arr_reservations[] = $reservation->getAsArray($timetable, $this->type, $date);
+        usort($arr_reservations, function ($a, $b) {
+            $a_arr = explode(':', $a['hour']);
+            $ah = (int)$a_arr[0];
+            $am = (int)$a_arr[1];
+            $b_arr = explode(':', $b['hour']);
+            $bh = (int)$b_arr[0];
+            $bm = (int)$b_arr[1];
+            if ($ah > $bh)
+                return 1;
+            elseif ($ah < $bh)
+                return -1;
+            else
+            {
+                if ($am > $bm)
+                    return 1;
+                elseif ($am < $bm)
+                    return -1;
+                else
+                    return 0;
+            }
+        });
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'date' => $date->format('d/m/Y'),
+            'reservations' => $arr_reservations,
+            'max_cutlerys' => $this->getMaxCutlerys(),
+            'reserved_cutlerys' => $this->getReservedCutlerys(),
+        ];
     }
 }

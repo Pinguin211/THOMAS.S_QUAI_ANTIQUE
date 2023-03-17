@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Timetable\Timetable;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -94,5 +95,17 @@ class Reservation
         $this->booker = $booker;
 
         return $this;
+    }
+
+    public function getAsArray(Timetable $timetable, int $service_type, \DateTime $dateTime): array
+    {
+        $allergys = $this->allergy ? $this->booker->getAllergysAsArrayName() : [];
+        return [
+            'id' => $this->id,
+            'name' => $this->booker->getName(),
+            'cutlerys' => $this->cutlerys,
+            'allergys' => $allergys,
+            'hour' => $timetable->getHourFromStage($this->stage_hour, $service_type, $dateTime)?->format('H:i')
+        ];
     }
 }

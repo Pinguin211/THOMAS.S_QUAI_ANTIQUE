@@ -50,6 +50,13 @@ class CheckerInterface
         return self::checkDataStatic($data, $type, $array_values);
     }
 
+    public function checkDataWithAcceptedValue(mixed $data, string $type, array $accepted_values, bool $strict = false): bool
+    {
+        if (!self::checkDataStatic($data, $type))
+            return false;
+        return in_array($data, $accepted_values, $strict);
+    }
+
     public static function checkDataStatic(mixed $data, string $type, array $array_values = []): bool
     {
         if (empty($data))

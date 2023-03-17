@@ -106,4 +106,12 @@ class Booker
     {
         $this->allergys = new ArrayCollection($ingredients);
     }
+
+    public function getAllergysAsArrayName(): array
+    {
+        $arr = [];
+        foreach ($this->allergys as $allergy)
+            $arr[] = $allergy->getName();
+        return $arr;
+    }
 }
