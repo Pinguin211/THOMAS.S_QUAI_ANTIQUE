@@ -115,7 +115,7 @@ body {
         img {
           $width: 100%;
           max-width: $width;
-          height: calc($width/(1 + (9/7)));
+          height: calc(#{$width}/(1 + (9/7)));
         }
       }
     }
