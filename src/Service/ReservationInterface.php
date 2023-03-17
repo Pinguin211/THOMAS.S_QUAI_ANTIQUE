@@ -117,14 +117,17 @@ class ReservationInterface
         $sess = false;
         $timetable = $this->infoFile->getTimetable();
         while ((!$service || $service <= 0) && $i < 60 && $timetable) {
-            if (($day = $timetable->getDayFromDateTime($today))) {
+            if (($day = $timetable->getDayFromDateTime($today)))
+            {
                 if (!($sess = $day->getNextSessionDayFromDateTime($today)) ||
-                    ($service = $this->freeReservationPlacesOnService($today, $sess->getType())) <= 0) {
+                    ($service = $this->freeReservationPlacesOnService($today, $sess->getType())) <= 0)
+                {
                     if (($sess = $day->getNextSessionNightFromDateTime($today)))
                         $service = $this->freeReservationPlacesOnService($today, $sess->getType());
                 }
             }
             $today->modify('+1 day');
+            $today->setTime(0, 0);
             $i++;
         }
         if (!$service || $service <= 0 || $sess === false)
