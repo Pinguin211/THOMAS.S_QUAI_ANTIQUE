@@ -24,6 +24,11 @@
             <div class="center">
                 {{ form_row(form.submit, { 'label' : opt, 'attr' : {'class' : 'btn'}}) }}
             </div>
+            {% if menu_id %}
+                <div class="text-end">
+                    <a href="{{ path('app_remove_menu', {'id': menu_id}) }}"><i class="bi bi-trash"></i>Cliquer ici pour supprimer se menu</a>
+                </div>
+            {% endif %}
             {{ form_end(form) }}
         </div>
     </div>

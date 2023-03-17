@@ -31,14 +31,13 @@ class Admin
     public function removeGaleryImage(GaleryImage $galeryImage, GaleryInterface $galery): void
     {
         $galery->removeGaleryImage($galeryImage->getName(), $galeryImage->getTypeString());
-        $this->entityManager->remove($galeryImage);
-        $this->entityManager->flush();
+        $this->deleteObject($galeryImage);
     }
 
     public function setGaleryImageTitle(GaleryImage $galeryImage, string $title)
     {
         $galeryImage->setTitle($title);
-        $this->entityManager->flush();
+        $this->flush();
     }
 
     public function addDish(Dish $dish): void
@@ -62,12 +61,22 @@ class Admin
         $this->flush();
     }
 
-    public function deleteIngredient(Ingredient $ingredient)
+    public function deleteIngredient(Ingredient $ingredient): void
     {
         $this->deleteObject($ingredient);
     }
 
-    public function deleteObject(mixed $obj)
+    public function deleteDish(Dish $dish): void
+    {
+        $this->deleteObject($dish);
+    }
+
+    public function deleteMenu(Menu $menu): void
+    {
+        $this->deleteObject($menu);
+    }
+
+    public function deleteObject(mixed $obj): void
     {
         $this->entityManager->remove($obj);
         $this->flush();

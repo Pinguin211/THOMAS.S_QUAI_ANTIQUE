@@ -43,6 +43,11 @@
             <div class="center">
                 {{ form_row(form.submit, { 'label' : opt, 'attr' : {'class' : 'btn'}}) }}
             </div>
+            {% if dish_id %}
+                <div class="text-end">
+                    <a href="{{ path('app_remove_dish', {'id': dish_id}) }}"><i class="bi bi-trash"></i>Cliquer ici pour supprimer se plats</a>
+                </div>
+            {% endif %}
             {{ form_end(form) }}
         </div>
     </div>

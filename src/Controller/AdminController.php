@@ -83,6 +83,7 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/dish.html.twig', [
             'form' => $form->createView(),
+            'dish_id' => $dish->getId(),
             'ingredients_list' => $ingredients->getAllIngredientsListByType(),
             'ingredients_types' => Ingredient::TYPE_NAMES,
             'auto' => $automatic->getParams(),
@@ -152,6 +153,7 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/menu.html.twig', [
             'form' => $form->createView(),
+            'menu_id' => $menu->getId(),
             'auto' => $automatic->getParams(),
             'opt' => $mod ? 'Modifier' : 'Ajouter',
         ]);
@@ -236,5 +238,38 @@ class AdminController extends AbstractController
         }
         $entityManager->flush();
         return new Response('Nombre de couverts bien mis à jour pour ce service', 200);
+    }
+
+
+    #[Route('/admin/remove_dish', name: 'app_remove_dish')]
+    public function remove_dish(RolesInterface $roles, EntityManagerInterface $entityManager, CheckerInterface $checker): Response
+    {
+        if (!$this->getUser() || !($admin = $this->getUser()->getAdmin($roles, $entityManager)))
+            return $this->redirectToRoute('app_homepage');
+        if (!$checker->checkArrayData($_GET, 'id', 'numeric') ||
+            !($dish = $entityManager->getRepository(Dish::class)->findOneBy(['id' => $_GET['id']])))
+            return $this->redirectToRoute('app_message', ['title' => 'Plat non trouvé',
+                'message' => "Le plats sélectionné n'existe pas",
+                'redirect_app' => 'app_menu']);
+        $admin->deleteDish($dish);
+        return $this->redirectToRoute('app_message', ['title' => 'Plat supprimé',
+            'message' => "Le plat sélectionné à bien était supprimé",
+            'redirect_app' => 'app_menu']);
+    }
+
+    #[Route('/admin/remove_menu', name: 'app_remove_menu')]
+    public function remove_menu(RolesInterface $roles, EntityManagerInterface $entityManager, CheckerInterface $checker): Response
+    {
+        if (!$this->getUser() || !($admin = $this->getUser()->getAdmin($roles, $entityManager)))
+            return $this->redirectToRoute('app_homepage');
+        if (!$checker->checkArrayData($_GET, 'id', 'numeric') ||
+            !($menu = $entityManager->getRepository(Menu::class)->findOneBy(['id' => $_GET['id']])))
+            return $this->redirectToRoute('app_message', ['title' => 'Menu non trouvé',
+                'message' => "Le menu sélectionné n'existe pas",
+                'redirect_app' => 'app_menu']);
+        $admin->deleteMenu($menu);
+        return $this->redirectToRoute('app_message', ['title' => 'Menu supprimé',
+            'message' => "Le menu sélectionné à bien était supprimé",
+            'redirect_app' => 'app_menu']);
     }
 }
