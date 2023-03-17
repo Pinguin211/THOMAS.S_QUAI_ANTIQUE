@@ -16,7 +16,7 @@
                             <li><a href="{{ path('app_menu') }}"><i class="bi bi-map" aria-label="Menu"> Menu</i></a></li>
                             <li><a href="{{ path('app_galery') }}"><i class="bi bi-images" aria-label="Galerie"> Galerie </i></a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('app_reservation_list') }}"><i class="bi bi-card-listgi" aria-label="Galerie"> Liste des reservations </i></a></li>
+                                <li><a href="{{ path('app_reservation_list') }}"><i class="bi bi-card-list" aria-label="Galerie"> Liste des reservations </i></a></li>
                             {% endif %}
                         </ul>
                     </nav>
