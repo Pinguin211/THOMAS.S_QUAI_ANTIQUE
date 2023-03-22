@@ -77,17 +77,19 @@ export default class extends Controller {
         closed.attr('id', 'closed')
         closed.addClass('bi bi-x-lg')
 
-        const trash = $('<i>')
-        trash.on('click', function () {
-            deleteImg(user_info, arr)
-        })
-        trash.attr('id', 'trash')
-        trash.addClass('bi bi-trash')
-
         title_div.append(title)
         title_div.append(closed)
-        title_div.append(trash)
 
+        if (this.is_admin)
+        {
+            const trash = $('<i>')
+            trash.on('click', function () {
+                deleteImg(user_info, arr)
+            })
+            trash.attr('id', 'trash')
+            trash.addClass('bi bi-trash')
+            title_div.append(trash)
+        }
 
         div.append(title_div)
         if (name === 'diapo')
